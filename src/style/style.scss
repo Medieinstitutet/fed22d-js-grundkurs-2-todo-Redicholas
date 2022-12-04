@@ -1,64 +1,104 @@
 @use "utils/a11y"; // Om det inte funkar, byt @use mot @import
 @use "vendor/reset";
 
-:root {
-  // TODO: Går bra att radera kod även här!
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: rem(16px);
-  line-height: 24px;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgb(255 255 255 / 87%);
-  background-color: #242424;
-  font-synthesis: none;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-size-adjust: 100%;
+body {
+  font-family: 'Josefin Slab', serif;
+  background: #ecebeb;
+  color: #000;
+  letter-spacing: 1px;
 }
 
-// TODO: Radera mig! Jag är bara ett exempel.
-main {
-  padding: 20px;
-}
-
-.app {
-  margin-block: 20px;
+header {
+  text-align: center;
   display: flex;
-  gap: 20px;
-  justify-content: space-around;
+  height: 20vh;
 
-  .card {
-    $card-size: 250px;
+  .burger {
+    font-size: 3.5rem;
 
-    width: 0.6413 * $card-size;
-    height: $card-size;
-    cursor: pointer;
-    background: #102a3f;
-    border-radius: 8px;
+    button {
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      top: 35px;
+      left: 20px;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+  }
+
+
+  .logo {
+    margin: 0 auto;
+    position: relative;
+    top: 10px;
+
+    h1 {
+      font-size: 5rem;
+      padding-bottom: 0;
+      font-weight: 100;
+      letter-spacing: 5px;
+    }
+  }
+}
+
+main {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .welcome-text {
+    font-size: 1.8rem;
+  }
+
+  .get-it-done {
+    font-size: 1.3rem;
+    font-weight: 100;
+  }
+
+  .list {
+    margin-top: 4rem;
+    width: 80vw;
+    padding: 0.3rem;
     display: flex;
-    font-weight: bold;
     align-items: center;
-    justify-content: space-around;
-    text-align: center;
-    box-shadow: 5px 5px 5px rgb(0 0 0 / 20%);
+    justify-content: space-between;
+    border: 1px solid black;
 
-    .front {
-      font-size: rem(50px);
+    input[type=checkbox] {
+      height: 20px;
+      width: 20px;
     }
 
-    .back {
-      display: none;
+    .list-left {
+      display: flex;
+      align-items: center;
     }
 
-    &.visible {
-      .front {
-        display: none;
+    .list-right {
+      display: flex;
+      align-items: center;
+
+      input[type=color] {
+        margin-right: 0.3rem;
+        height: 35px;
+        width: 35px;
       }
 
-      .back {
-        display: block;
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 35px;
+        width: 35px;
       }
     }
+  }
+
+  .input {
+    position: absolute;
+    bottom: 5rem;
   }
 }
