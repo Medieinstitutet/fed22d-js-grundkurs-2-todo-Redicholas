@@ -1,22 +1,58 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- TODO: glöm ej att byta språk här -->
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/ico" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projekt</title>
-  </head>
-  <body>
-    <main>
-      <div class="app" id="app"></div> <!-- TODO: går bra att radera -->
-      <!-- TODO: skriv din kod här, innan script-taggen -->
-    </main>
+<html lang="en">
 
-    <!-- TODO
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/ico" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100;400;700&display=swap" rel="stylesheet">
+  <title>Doer | Get it Done</title>
+</head>
+
+<body>
+  <header>
+    <span class="material-symbols-outlined burger">
+      <button>
+        menu
+      </button>
+    </span>
+    <div class="logo">
+      <h1>Doer</h1>
+    </div>
+  </header>
+  <main>
+    <span class="welcome-text">Welcome <span id="user"></span></span>
+    <h2 class="get-it-done">Get it Done</h2>
+    <div class="list">
+      <div class="list-left">
+        <input type="checkbox">
+        <p>Dummy text</p>
+      </div>
+      <div class="list-right">
+        <input type="color">
+        <button><span class="material-symbols-outlined">
+            delete
+          </span></button>
+      </div>
+    </div>
+    <div class="input">
+      <input type="text">
+      <button>Add</button>
+    </div>
+  </main>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
+
+
+<!-- TODO
     - Validera HTML (kopiera den renderade HTML-koden): https://validator.w3.org/#validate_by_input
     - Kontrollera tillgänglighet: https://www.a11yproject.com/checklist/ & Chrome Lighthouse/Firefox Accessibility Tools
     - Validera genererade CSS: https://jigsaw.w3.org/css-validator/#validate_by_input
     -->
-    <script type="module" src="/src/main.ts"></script>
-  </body>
-</html>
