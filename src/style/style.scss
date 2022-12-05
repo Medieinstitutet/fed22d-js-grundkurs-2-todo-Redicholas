@@ -8,6 +8,27 @@ body {
   letter-spacing: 1px;
 }
 
+.landing-page {
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+  position: absolute;
+  background: #ecebeb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  h1 {
+    margin: 2rem;
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+}
+
 header {
   text-align: center;
   display: flex;
@@ -65,7 +86,6 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid black;
 
     input[type=checkbox] {
       height: 20px;
@@ -101,4 +121,8 @@ main {
     position: absolute;
     bottom: 5rem;
   }
+}
+
+.hidden {
+  display: none;
 }
