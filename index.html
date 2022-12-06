@@ -10,19 +10,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
   <title>Doer | Get it Done</title>
 </head>
 
 <body>
   <!-- TODO: Remove class hidden before publishing-->
-  <div class="landing-page" id="landingPage">
+  <div class="landing-page hidden" id="landingPage">
     <h1>Welcome, enter your name:</h1>
     <input type="text" id="nameInput">
     <button id="nameSubmit">Ok</button>
   </div>
   <header>
     <span class="material-symbols-outlined burger">
-      <button>
+      <button class="burger" id="menuBtn">
         menu
       </button>
     </span>
@@ -33,10 +34,20 @@
   <main>
     <span class="welcome-text">Welcome <span id="user"></span></span>
     <h2 class="get-it-done">Get it Done</h2>
+    <div class="menu" id="menu">
+      <button class="categoryBtn" id="generalButton">General</button>
+      <button class="categoryBtn" id="personalButton">Personal</button>
+      <button class="categoryBtn" id="workButton">Work</button>
+    </div>
     <div class="list" id="todoList">
       <!-- Rendered in TS -->
     </div>
-    <div class="input">
+    <div class="todo-add">
+      <select id="categorySelect" class="category-select">
+        <option value="general">General</option>
+        <option value="personal">Personal</option>
+        <option value="work">Work</option>
+      </select>
       <input type="text" id="todoInput">
       <button id="todoInputSubmit">Add</button>
     </div>
