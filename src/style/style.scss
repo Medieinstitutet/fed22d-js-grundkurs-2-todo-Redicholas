@@ -1,33 +1,40 @@
 @use "utils/a11y";
 @use "vendor/reset";
 
-body {
+h1,
+h2,
+.welcome-text {
+  margin: 0 2rem;
   font-family: 'Josefin Slab', serif;
-  background: #ecebeb;
-  color: #000;
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+  background-color: #eae7dc;
+  color: #231e1f;
   letter-spacing: 1px;
   overflow: hidden;
 }
 
 p {
-  font-weight: 700;
+  font-weight: 400;
+}
+
+button {
+  cursor: pointer;
 }
 
 .landing-page {
   height: 100vh;
   width: 100vw;
-  z-index: 2;
+  z-index: 3;
   position: absolute;
-  background: #ecebeb;
+  background: #A6C2EA;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-
-  h1 {
-    margin: 2rem;
-  }
 
   button {
     margin-top: 1rem;
@@ -41,6 +48,9 @@ header {
 
   .burger {
     font-size: 3.5rem;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
 
     button {
       height: 50px;
@@ -53,7 +63,6 @@ header {
       background: none;
     }
   }
-
 
   .logo {
     margin: 0 auto;
@@ -84,17 +93,45 @@ main {
     font-weight: 100;
   }
 
+  .menu {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    padding-top: 5rem;
+    position: absolute;
+    left: -100px;
+    top: 20px;
+
+    button {
+      height: 50px;
+      width: 50px;
+      border-radius: 10%;
+      border: none;
+      background: #957554;
+      margin: 0.5rem;
+      box-shadow: 0 2px 3px #231e1f;
+      font-size: 0.6rem;
+    }
+
+    button:hover {
+      box-shadow: none;
+    }
+
+  }
+
   .list {
     margin-top: 4rem;
     width: 80vw;
     height: 50vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 0.3rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
+    border-radius: 2%;
+    box-shadow: 0 2px 3px #00000066;
 
     .list-whole {
       width: 100%;
@@ -118,14 +155,6 @@ main {
       display: flex;
       align-items: flex-end;
 
-      input[type=color] {
-        margin-right: 0.3rem;
-        height: 30px;
-        width: 30px;
-        border: none;
-        cursor: pointer;
-      }
-
       button {
         display: flex;
         align-items: center;
@@ -138,17 +167,33 @@ main {
 
       button:hover {
         border: 1px solid black;
-        cursor: pointer;
       }
     }
   }
 
-  .input {
-    position: absolute;
-    bottom: 5rem;
+  .todo-add {
+    max-width: 80vw;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    .input {
+      position: absolute;
+      bottom: 5rem;
+    }
   }
 }
 
 .hidden {
   display: none;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
