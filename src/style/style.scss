@@ -1,4 +1,4 @@
-@use "utils/a11y"; // Om det inte funkar, byt @use mot @import
+@use "utils/a11y";
 @use "vendor/reset";
 
 body {
@@ -6,6 +6,10 @@ body {
   background: #ecebeb;
   color: #000;
   letter-spacing: 1px;
+}
+
+p {
+  font-weight: 700;
 }
 
 .landing-page {
@@ -82,16 +86,19 @@ main {
   .list {
     margin-top: 4rem;
     width: 80vw;
+    height: 50vh;
+    overflow: scroll;
     padding: 0.3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    border: 1px solid black;
 
     .list-whole {
       width: 100%;
       display: flex;
       justify-content: space-between;
+      margin-bottom: 0.5rem;
     }
 
     input[type=checkbox] {
@@ -113,6 +120,8 @@ main {
         margin-right: 0.3rem;
         height: 30px;
         width: 30px;
+        border: none;
+        cursor: pointer;
       }
 
       button {
@@ -121,6 +130,13 @@ main {
         justify-content: center;
         height: 30px;
         width: 30px;
+        border: none;
+        background: none;
+      }
+
+      button:hover {
+        border: 1px solid black;
+        cursor: pointer;
       }
     }
   }
