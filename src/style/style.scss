@@ -6,6 +6,7 @@ body {
   background: #ecebeb;
   color: #000;
   letter-spacing: 1px;
+  overflow: hidden;
 }
 
 p {
@@ -87,7 +88,8 @@ main {
     margin-top: 4rem;
     width: 80vw;
     height: 50vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding: 0.3rem;
     display: flex;
     flex-direction: column;
