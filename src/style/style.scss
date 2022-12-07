@@ -94,22 +94,24 @@ main {
   }
 
   .menu {
-    height: 300px;
     display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    padding-top: 5rem;
-    position: absolute;
-    left: -100px;
-    top: 20px;
+    flex-direction: row;
+    position: relative;
+    top: 100px;
+
+    .selected {
+      position: relative;
+      bottom: 10px;
+    }
 
     button {
       height: 50px;
       width: 50px;
       border-radius: 10%;
       border: none;
-      background: #957554;
+      background: #e5a463;
       margin: 0.5rem;
+      padding-bottom: 1.5rem;
       box-shadow: 0 2px 3px #231e1f;
       font-size: 0.6rem;
     }
@@ -121,6 +123,7 @@ main {
   }
 
   .list {
+    background: #eae7dc;
     margin-top: 4rem;
     width: 80vw;
     height: 50vh;
@@ -132,6 +135,8 @@ main {
     align-items: center;
     border-radius: 2%;
     box-shadow: 0 2px 3px #00000066;
+    position: relative;
+    z-index: 5;
 
     .list-whole {
       width: 100%;
