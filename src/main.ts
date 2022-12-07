@@ -29,17 +29,19 @@ class TodoItem {
 
 const todoArray: TodoItem[] = [];
 
+let isOpen = false;
+
 function toggleMenu() {
-  let isOpen = false;
-  if (isOpen) {
-    gsap.from(menu, { x: -100, duration: 0.5 });
-    isOpen = false;
-  }
   if (!isOpen) {
     gsap.to(menu, { x: 100, duration: 0.5 });
     isOpen = true;
+  } else if (isOpen) {
+    gsap.to(menu, { x: 0 });
+    isOpen = false;
+  } else {
+    gsap.to(menu, { x: -100, duration: 0.5 });
+    isOpen = true;
   }
-  // menu?.classList.toggle('visually-hidden');
 }
 
 function hide() {
