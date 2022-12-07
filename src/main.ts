@@ -5,13 +5,16 @@ const landingPage = document.querySelector('#landingPage');
 const nameDisplay = document.querySelector('#user');
 const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
 const nameSubmit = document.querySelector('#nameSubmit');
-const menuBtn = document.querySelector('#menuBtn') as HTMLButtonElement;
-const menu = document.querySelector('#menu');
+
+const generalBtn = document.querySelector('#generalButton');
+const personalBtn = document.querySelector('#personalButton');
+const workBtn = document.querySelector('#workButton');
 
 const todoInput = document.querySelector('#todoInput') as HTMLInputElement;
 const todoInputSubmit = document.querySelector('#todoInputSubmit');
-const categorySelect = document.querySelector('#categorySelect') as HTMLInputElement;
 const todoList = document.querySelector('#todoList');
+
+let todoCategory: string;
 
 class TodoItem {
   category: string;
@@ -28,21 +31,6 @@ class TodoItem {
 }
 
 const todoArray: TodoItem[] = [];
-
-let isOpen = false;
-
-function toggleMenu() {
-  if (!isOpen) {
-    gsap.to(menu, { x: 100, duration: 0.5 });
-    isOpen = true;
-  } else if (isOpen) {
-    gsap.to(menu, { x: 0 });
-    isOpen = false;
-  } else {
-    gsap.to(menu, { x: -100, duration: 0.5 });
-    isOpen = true;
-  }
-}
 
 function hide() {
   landingPage?.classList.add('hidden');
@@ -87,14 +75,19 @@ function showCategory(category: string) {
 }
 
 function showTodo() {
-  const selectedCategory = categorySelect.value;
-  showCategory(selectedCategory);
+  showCategory(todoCategory);
 }
 
 function addTodo() {
   if (todoInput.value !== '') {
     const todoValue = todoInput.value;
-    const todoCategory = categorySelect.value;
+    if (generalBtn?.classList.contains('selected')) {
+      todoCategory = 'general';
+    } else if (personalBtn?.classList.contains('selected')) {
+      todoCategory = 'personal';
+    } else {
+      todoCategory = 'work';
+    }
 
     const newTodo = new TodoItem(todoCategory, todoArray.length, todoValue);
     todoArray.push(newTodo);
@@ -104,6 +97,13 @@ function addTodo() {
   }
 }
 
+// Enter key adds todo
+todoInput?.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    addTodo();
+  }
+});
+
 function deleteTodo() {
   const index: number = event.target.parentElement.parentElement.parentElement.dataset.id;
   todoArray.splice(index, 1);
@@ -111,13 +111,6 @@ function deleteTodo() {
 }
 
 nameSubmit?.addEventListener('click', getName);
-
-// Enter key adds todo
-todoInput?.addEventListener('keyup', (event) => {
-  if (event.key === 'Enter') {
-    addTodo();
-  }
-});
 
 todoInputSubmit?.addEventListener('click', addTodo);
 
@@ -127,10 +120,43 @@ todoList?.addEventListener('click', (event) => {
   }
 });
 
-document.querySelector('#generalButton')?.addEventListener('click', () => showCategory('general'));
-document.querySelector('#personalButton')?.addEventListener('click', () => showCategory('personal'));
-document.querySelector('#workButton')?.addEventListener('click', () => showCategory('work'));
+// Opens the "General Tab"
+generalBtn?.addEventListener('click', () => {
+  if (generalBtn.classList.contains('selected')) {
+    personalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  } else {
+    generalBtn.classList.toggle('selected');
+    personalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  }
+  showCategory('general');
+});
 
-menuBtn.addEventListener('click', toggleMenu);
+// Opens the "Personal Tab"
+personalBtn?.addEventListener('click', () => {
+  if (personalBtn.classList.contains('selected')) {
+    generalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  } else {
+    personalBtn.classList.toggle('selected');
+    generalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  }
+  showCategory('personal');
+});
+
+// Opens the "Work Tab"
+workBtn?.addEventListener('click', () => {
+  if (workBtn.classList.contains('selected')) {
+    personalBtn?.classList.remove('selected');
+    generalBtn?.classList.remove('selected');
+  } else {
+    workBtn.classList.toggle('selected');
+    personalBtn?.classList.remove('selected');
+    generalBtn?.classList.remove('selected');
+  }
+  showCategory('work');
+});
 
 showTodo();

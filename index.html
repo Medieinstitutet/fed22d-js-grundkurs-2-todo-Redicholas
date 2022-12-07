@@ -22,11 +22,6 @@
     <button id="nameSubmit">Ok</button>
   </div>
   <header>
-    <span class="material-symbols-outlined burger">
-      <button class="burger" id="menuBtn">
-        menu
-      </button>
-    </span>
     <div class="logo">
       <h1>Doer</h1>
     </div>
@@ -35,7 +30,7 @@
     <span class="welcome-text">Welcome <span id="user"></span></span>
     <h2 class="get-it-done">Get it Done</h2>
     <div class="menu" id="menu">
-      <button class="categoryBtn" id="generalButton">General</button>
+      <button class="categoryBtn selected" id="generalButton">General</button>
       <button class="categoryBtn" id="personalButton">Personal</button>
       <button class="categoryBtn" id="workButton">Work</button>
     </div>
@@ -43,11 +38,6 @@
       <!-- Rendered in TS -->
     </div>
     <div class="todo-add">
-      <select id="categorySelect" class="category-select">
-        <option value="general">General</option>
-        <option value="personal">Personal</option>
-        <option value="work">Work</option>
-      </select>
       <input type="text" id="todoInput">
       <button id="todoInputSubmit">Add</button>
     </div>
