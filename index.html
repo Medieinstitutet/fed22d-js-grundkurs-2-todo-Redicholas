@@ -17,18 +17,18 @@
 <body>
   <!-- TODO: Remove class hidden before publishing-->
   <div class="landing-page hidden" id="landingPage">
-    <h1>Welcome, enter your name:</h1>
+    <h1>Welcome <br> Enter Your Name:</h1>
     <input type="text" id="nameInput">
     <button id="nameSubmit">Ok</button>
   </div>
   <header>
     <div class="logo">
       <h1>Doer</h1>
+      <span class="welcome-text">Welcome <span id="user"></span></span>
+      <h2 class="get-it-done">Get it Done</h2>
     </div>
   </header>
   <main>
-    <span class="welcome-text">Welcome <span id="user"></span></span>
-    <h2 class="get-it-done">Get it Done</h2>
     <div class="menu" id="menu">
       <button class="categoryBtn selected" id="generalButton">General</button>
       <button class="categoryBtn" id="personalButton">Personal</button>
@@ -39,7 +39,7 @@
     </div>
     <div class="todo-add">
       <input type="text" id="todoInput">
-      <button id="todoInputSubmit">Add</button>
+      <button id="todoInputSubmit" class="add-btn">Add</button>
     </div>
   </main>
 
