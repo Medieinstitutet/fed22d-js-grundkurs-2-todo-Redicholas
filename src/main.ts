@@ -23,10 +23,15 @@ class TodoItem {
 
   todo: string;
 
-  constructor(category: string, index: number, todo: string) {
+  completed: boolean;
+
+  // TODO: Dates and deadlines
+
+  constructor(category: string, index: number, todo: string, completed: boolean) {
     this.category = category;
     this.index = index;
     this.todo = todo;
+    this.completed = completed;
   }
 }
 
@@ -56,8 +61,8 @@ function showCategory(category: string) {
         todoListHtml += `
         <div class="list-whole" data-id="${item.index}">
           <div class="list-left">
-            <input type="checkbox" id="completed">
-            <p>${item.todo}</p>
+            <input type="checkbox" class="checkbox">
+            <p class="todo-item">${item.todo}</p>
           </div>
           <div class="list-right">
             <span class="material-symbols-outlined"><button class="delTodo">
@@ -78,6 +83,20 @@ function showTodo() {
   showCategory(todoCategory);
 }
 
+let checkboxes = document.querySelectorAll('.checkbox');
+
+function checkboxChecker(event: Event) {
+  checkboxes = document.querySelectorAll('.checkboxes');
+
+  console.log('fire');
+  const checkbox = event.target as HTMLInputElement;
+  if (checkbox.checked) {
+    console.log('Checkbox is checked', event);
+  } else {
+    console.log('Checkbox is NOT checked', event);
+  }
+}
+
 function addTodo() {
   if (todoInput.value !== '') {
     const todoValue = todoInput.value;
@@ -89,11 +108,17 @@ function addTodo() {
       todoCategory = 'work';
     }
 
-    const newTodo = new TodoItem(todoCategory, todoArray.length, todoValue);
+    const newTodo = new TodoItem(todoCategory, todoArray.length, todoValue, false);
     todoArray.push(newTodo);
 
     showTodo();
     todoInput.value = '';
+
+    checkboxes = document.querySelectorAll('.checkboxes');
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', checkboxChecker);
+    });
+    console.log(checkboxes);
   }
 }
 
@@ -104,6 +129,7 @@ todoInput?.addEventListener('keyup', (event) => {
   }
 });
 
+// FIXME: Bug deleting todos in random order
 function deleteTodo() {
   const index: number = event.target.parentElement.parentElement.parentElement.dataset.id;
   todoArray.splice(index, 1);
@@ -114,6 +140,7 @@ nameSubmit?.addEventListener('click', getName);
 
 todoInputSubmit?.addEventListener('click', addTodo);
 
+// Deletes the clicked todo item
 todoList?.addEventListener('click', (event) => {
   if (event.target.matches('.delTodo')) {
     deleteTodo();
@@ -160,3 +187,7 @@ workBtn?.addEventListener('click', () => {
 });
 
 showTodo();
+
+// localStorage.setItem('Todo', JSON.stringify(newTodo));
+// const retrievedObject = localStorage.getItem('Todo');
+// console.log(JSON.parse(retrievedObject));
