@@ -1,6 +1,12 @@
 @use "utils/a11y";
 @use "vendor/reset";
 
+$col-bg: #E0DFD5;
+$col-base: #E8E9EB;
+$col-dark: #313638;
+$col-accent1: #E4B363;
+$col-accent2: #EF6461;
+
 h1,
 h2,
 .welcome-text {
@@ -10,8 +16,8 @@ h2,
 
 body {
   font-family: Montserrat, sans-serif;
-  background-color: #eae7dc;
-  color: #231e1f;
+  background-color: $col-bg;
+  color: $col-dark;
   letter-spacing: 1px;
   overflow: hidden;
 }
@@ -27,42 +33,56 @@ button {
 .landing-page {
   height: 100vh;
   width: 100vw;
-  z-index: 3;
+  z-index: 6;
   position: absolute;
-  background: #A6C2EA;
+  background: $col-dark;
+  color: $col-bg;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
 
+  h1 {
+    font-size: 3rem;
+    position: relative;
+    bottom: 100px;
+  }
+
+  input {
+    width: 150px;
+    background: $col-bg;
+    border: 1px solid $col-base;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  input:focus {
+    outline: 0;
+    border: 1px solid $col-accent1;
+  }
+
   button {
     margin-top: 1rem;
+    width: 150px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: $col-accent1;
+    box-shadow: 0 2px 15px $col-dark;
+  }
+
+  button:hover {
+    border: 1px solid $col-dark;
   }
 }
 
 header {
   text-align: center;
-  display: flex;
   height: 20vh;
-
-  .burger {
-    font-size: 3.5rem;
-    position: relative;
-    z-index: 2;
-    cursor: pointer;
-
-    button {
-      height: 50px;
-      width: 50px;
-      position: absolute;
-      top: 35px;
-      left: 20px;
-      padding: 0;
-      border: none;
-      background: none;
-    }
-  }
+  background: $col-dark;
+  color: $col-bg;
+  box-shadow: 0 0 20px $col-dark;
 
   .logo {
     margin: 0 auto;
@@ -71,27 +91,33 @@ header {
 
     h1 {
       font-size: 5rem;
-      padding-bottom: 0;
+      padding: 0;
       font-weight: 100;
       letter-spacing: 5px;
+      text-shadow: 1px 2px 3px black;
+    }
+
+    .welcome-text {
+      font-size: 1.8rem;
+      color: $col-accent1;
+      position: relative;
+      bottom: 20px;
+      text-align: center;
+      text-shadow: 1px 2px 3px black;
+    }
+
+    .get-it-done {
+      font-size: 1.3rem;
+      font-weight: 100;
+      color: $col-dark;
     }
   }
 }
 
 main {
-  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .welcome-text {
-    font-size: 1.8rem;
-  }
-
-  .get-it-done {
-    font-size: 1.3rem;
-    font-weight: 100;
-  }
 
   .menu {
     display: flex;
@@ -102,6 +128,7 @@ main {
     .selected {
       position: relative;
       bottom: 10px;
+      background: $col-accent2;
     }
 
     button {
@@ -109,10 +136,10 @@ main {
       width: 50px;
       border-radius: 10%;
       border: none;
-      background: #e5a463;
+      background: $col-accent1;
       margin: 0.5rem;
       padding-bottom: 1.5rem;
-      box-shadow: 0 2px 3px #231e1f;
+      box-shadow: 0 2px 3px $col-dark;
       font-size: 0.6rem;
     }
 
@@ -123,7 +150,7 @@ main {
   }
 
   .list {
-    background: #eae7dc;
+    background: $col-base;
     margin-top: 4rem;
     width: 80vw;
     height: 50vh;
@@ -134,7 +161,7 @@ main {
     flex-direction: column;
     align-items: center;
     border-radius: 2%;
-    box-shadow: 0 2px 3px #00000066;
+    box-shadow: 0 2px 2px $col-dark;
     position: relative;
     z-index: 5;
 
@@ -149,6 +176,12 @@ main {
       height: 20px;
       width: 20px;
       margin-right: 0.5rem;
+      border: none;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: $col-accent1;
     }
 
     .list-left {
@@ -171,7 +204,7 @@ main {
       }
 
       button:hover {
-        border: 1px solid black;
+        border: 1px solid $col-dark;
       }
     }
   }
@@ -182,23 +215,30 @@ main {
     justify-content: space-between;
     margin-top: 1rem;
 
-    .input {
-      position: absolute;
-      bottom: 5rem;
+    input {
+      background: $col-base;
+      border-radius: 5px;
+      box-shadow: 0 1px 2px $col-dark;
+      margin-right: 0.5rem;
+      padding: 0.3rem;
+      border: 1px solid $col-base;
+    }
+
+    input:focus {
+      outline: 0;
+      border: 1px solid $col-accent1;
+      box-sizing: border-box;
+    }
+
+    .add-btn {
+      border: none;
+      border-radius: 5px;
+      background: $col-accent1;
+      box-shadow: 0 1px 2px $col-dark;
     }
   }
 }
 
 .hidden {
   display: none;
-}
-
-.visually-hidden {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
 }
