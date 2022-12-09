@@ -15,6 +15,7 @@ const todoInputSubmit = document.querySelector('#todoInputSubmit');
 const todoList = document.querySelector('#todoList');
 
 let todoCategory: string;
+let checkboxes;
 
 class TodoItem {
   category: string;
@@ -37,7 +38,7 @@ class TodoItem {
 
 const todoArray: TodoItem[] = [];
 
-function hide() {
+function hideLandingPage() {
   landingPage?.classList.add('hidden');
 }
 
@@ -47,7 +48,7 @@ function getName() {
     nameDisplay.innerHTML = user;
   }
   if (landingPage != null) {
-    gsap.to(landingPage, { y: 1000, duration: 1, onComplete: hide });
+    gsap.to(landingPage, { y: 1000, duration: 1, onComplete: hideLandingPage });
   }
 }
 
@@ -59,10 +60,10 @@ function showCategory(category: string) {
     todoArray.forEach((item) => {
       if (item.category === category) {
         todoListHtml += `
-        <div class="list-whole" data-id="${item.index}">
+        <div class="list-whole">
           <div class="list-left">
-            <input type="checkbox" class="checkbox">
-            <p class="todo-item">${item.todo}</p>
+            <input type="checkbox" class="checkbox" id="checkbox">
+            <p class="todo-item" id="todo-text-${item.index}">${item.todo}</p>
           </div>
           <div class="list-right">
             <span class="material-symbols-outlined"><button class="delTodo">
@@ -79,22 +80,37 @@ function showCategory(category: string) {
   }
 }
 
+// TODO: Put todoCategory in showTodo() ?
 function showTodo() {
   showCategory(todoCategory);
 }
 
-let checkboxes = document.querySelectorAll('.checkbox');
+function completeTodo(e) {
+  todoArray.forEach((todo, i) => {
+    const listItem = document.querySelector(`#todo-${i}`);
+    if (todo.completed) {
+      listItem?.classList.add('.completed');
+      console.log(todo.index, 'is completed');
+    } else {
+      listItem?.classList.remove('.completed');
+      console.log(todo.index, 'is not completed');
+    }
+  });
+}
 
-function checkboxChecker(event: Event) {
-  checkboxes = document.querySelectorAll('.checkboxes');
+function checkTodo() {
+  checkboxes = document.querySelectorAll('.checkbox');
 
-  console.log('fire');
-  const checkbox = event.target as HTMLInputElement;
-  if (checkbox.checked) {
-    console.log('Checkbox is checked', event);
-  } else {
-    console.log('Checkbox is NOT checked', event);
-  }
+  checkboxes.forEach((checkbox, index) => {
+    checkbox.addEventListener('change', (event) => {
+      if (todoArray[index].completed) {
+        todoArray[index].completed = false;
+      } else {
+        todoArray[index].completed = true;
+      }
+      completeTodo(event.target);
+    });
+  });
 }
 
 function addTodo() {
@@ -113,21 +129,9 @@ function addTodo() {
 
     showTodo();
     todoInput.value = '';
-
-    checkboxes = document.querySelectorAll('.checkboxes');
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener('change', checkboxChecker);
-    });
-    console.log(checkboxes);
+    checkTodo();
   }
 }
-
-// Enter key adds todo
-todoInput?.addEventListener('keyup', (event) => {
-  if (event.key === 'Enter') {
-    addTodo();
-  }
-});
 
 // FIXME: Bug deleting todos in random order
 function deleteTodo() {
@@ -135,6 +139,48 @@ function deleteTodo() {
   todoArray.splice(index, 1);
   showTodo();
 }
+
+function selectGeneralTab() {
+  if (generalBtn?.classList.contains('selected')) {
+    personalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  } else {
+    generalBtn?.classList.toggle('selected');
+    personalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  }
+  showCategory('general');
+}
+
+function selectPersonalTab() {
+  if (personalBtn?.classList.contains('selected')) {
+    generalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  } else {
+    personalBtn?.classList.toggle('selected');
+    generalBtn?.classList.remove('selected');
+    workBtn?.classList.remove('selected');
+  }
+  showCategory('personal');
+}
+
+function selectWorkTab() {
+  if (workBtn?.classList.contains('selected')) {
+    personalBtn?.classList.remove('selected');
+    generalBtn?.classList.remove('selected');
+  } else {
+    workBtn?.classList.toggle('selected');
+    personalBtn?.classList.remove('selected');
+    generalBtn?.classList.remove('selected');
+  }
+  showCategory('work');
+}
+
+// Adds class "completed" to checked todo
+todoList?.addEventListener('change', (e) => {
+  const todo = document.querySelector(`#${e.target.nextElementSibling.id}`);
+  todo?.classList.add('completed');
+});
 
 nameSubmit?.addEventListener('click', getName);
 
@@ -147,43 +193,15 @@ todoList?.addEventListener('click', (event) => {
   }
 });
 
-// Opens the "General Tab"
-generalBtn?.addEventListener('click', () => {
-  if (generalBtn.classList.contains('selected')) {
-    personalBtn?.classList.remove('selected');
-    workBtn?.classList.remove('selected');
-  } else {
-    generalBtn.classList.toggle('selected');
-    personalBtn?.classList.remove('selected');
-    workBtn?.classList.remove('selected');
-  }
-  showCategory('general');
-});
+generalBtn?.addEventListener('click', selectGeneralTab);
+personalBtn?.addEventListener('click', selectPersonalTab);
+workBtn?.addEventListener('click', selectWorkTab);
 
-// Opens the "Personal Tab"
-personalBtn?.addEventListener('click', () => {
-  if (personalBtn.classList.contains('selected')) {
-    generalBtn?.classList.remove('selected');
-    workBtn?.classList.remove('selected');
-  } else {
-    personalBtn.classList.toggle('selected');
-    generalBtn?.classList.remove('selected');
-    workBtn?.classList.remove('selected');
+// Enter key adds todo
+todoInput?.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    addTodo();
   }
-  showCategory('personal');
-});
-
-// Opens the "Work Tab"
-workBtn?.addEventListener('click', () => {
-  if (workBtn.classList.contains('selected')) {
-    personalBtn?.classList.remove('selected');
-    generalBtn?.classList.remove('selected');
-  } else {
-    workBtn.classList.toggle('selected');
-    personalBtn?.classList.remove('selected');
-    generalBtn?.classList.remove('selected');
-  }
-  showCategory('work');
 });
 
 showTodo();
