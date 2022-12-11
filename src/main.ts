@@ -1,7 +1,9 @@
-import './style/style.scss';
+// import './style/style.scss';
+import './index.css';
 import { gsap } from 'gsap';
 
 const landingPage = document.querySelector('#landingPage');
+const darkLightBtn = document.querySelector('#darkLightBtn');
 const nameDisplay = document.querySelector('#user');
 const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
 const nameSubmit = document.querySelector('#nameSubmit');
@@ -12,34 +14,58 @@ const workBtn = document.querySelector('#workButton');
 
 const todoInput = document.querySelector('#todoInput') as HTMLInputElement;
 const todoInputSubmit = document.querySelector('#todoInputSubmit');
-const todoList = document.querySelector('#todoList');
+const todoListContainer = document.querySelector('#todoListContainer');
+const todoUl = document.querySelector('#todoUl');
+
+const time = new Date();
+const date = time.getDate();
+const month = time.getMonth() + 1;
+const year = time.getFullYear();
+const hour = time.getHours();
+const minute = time.getMinutes();
 
 let todoCategory: string;
-let checkboxes;
+let checkboxes: NodeListOf<HTMLInputElement>;
+let todoIndex = 0;
 
 class TodoItem {
   category: string;
 
   index: number;
 
-  todo: string;
+  todoText: string;
 
   completed: boolean;
 
-  // TODO: Dates and deadlines
+  timeAdded: string;
 
-  constructor(category: string, index: number, todo: string, completed: boolean) {
+  deadline: string; // TODO:
+
+  constructor(
+    category: string,
+    index: number,
+    todoText: string,
+    completed: boolean,
+    timeAdded: string,
+    deadline: string,
+  ) {
     this.category = category;
     this.index = index;
-    this.todo = todo;
+    this.todoText = todoText;
     this.completed = completed;
+    this.timeAdded = timeAdded;
+    this.deadline = deadline;
   }
 }
 
-const todoArray: TodoItem[] = [];
+let todoArray: TodoItem[] = [];
 
 function hideLandingPage() {
-  landingPage?.classList.add('hidden');
+  landingPage?.classList.add('visually-hidden');
+}
+
+function toggleDarkLight() {
+  document.documentElement.classList.toggle('dark');
 }
 
 function getName() {
@@ -52,70 +78,78 @@ function getName() {
   }
 }
 
-function showCategory(category: string) {
+// FIXME:
+function checkTodo() {
+  checkboxes = document.querySelectorAll('.checkboxes');
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', (e) => {
+      const id = e.target.id;
+      const todoText = document.querySelector(`#${e.target.parentElement.id.replace('todoLi-', 'todoText-')}`);
+      const index: number = id.split('-')[1];
+      if (!todoArray[index].completed) {
+        todoArray[index].completed = true;
+        todoText?.classList.add('.completed');
+      } else {
+        todoArray[index].completed = false;
+        todoText?.classList.remove('.completed');
+      }
+      localStorage.setItem('Todos', JSON.stringify(todoArray));
+      console.log(todoArray);
+    });
+  });
+}
+
+// TODO: Save "completed" state when switching categories
+function showTodos() {
+  const retrieved = localStorage.getItem('Todos');
+  if (retrieved != null) {
+    todoArray = JSON.parse(retrieved);
+  }
+  if (generalBtn?.classList.contains('selected')) {
+    todoCategory = 'general';
+  } else if (personalBtn?.classList.contains('selected')) {
+    todoCategory = 'personal';
+  } else {
+    todoCategory = 'work';
+  }
   let todoListHtml = '';
   if (todoArray.length === 0) {
-    todoListHtml = '<p>Dont you have anything to do?! <br> Add something!</p>';
+    todoListHtml = '<p class="text-center">Dont you have anything to do?! <br> Add something!</p>';
   } else {
     todoArray.forEach((item) => {
-      if (item.category === category) {
+      if (item.category === todoCategory) {
         todoListHtml += `
-        <div class="list-whole">
-          <div class="list-left">
-            <input type="checkbox" class="checkbox" id="checkbox">
-            <p class="todo-item" id="todo-text-${item.index}">${item.todo}</p>
-          </div>
-          <div class="list-right">
-            <span class="material-symbols-outlined"><button class="delTodo">
+          <li class="flex justify-between" id="todoLi-${item.index}">
+            <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
+            <p class="w-full ml-2" id="todoText-${item.index}">${item.todoText}</p>
+            <button class="deleteBtn" id="delTodo-${item.index}">
+            <span class="material-symbols-outlined text-sm deleteBtn">
             delete
-            </button></span>
-          </div>
-        </div>
+            </span></button>
+          </li>
         `;
       }
     });
   }
-  if (todoList != null) {
-    todoList.innerHTML = todoListHtml;
+  if (todoUl != null) {
+    todoUl.innerHTML = todoListHtml;
   }
+  checkTodo();
 }
 
-// TODO: Put todoCategory in showTodo() ?
-function showTodo() {
-  showCategory(todoCategory);
-}
+// Adds class "completed" to checked todo
+todoListContainer?.addEventListener('change', (e) => {
+  const todoText = document.querySelector(`#${e.target.parentNode.id}`);
+  todoText?.classList.toggle('completed');
+});
 
-function completeTodo(e) {
-  todoArray.forEach((todo, i) => {
-    const listItem = document.querySelector(`#todo-${i}`);
-    if (todo.completed) {
-      listItem?.classList.add('.completed');
-      console.log(todo.index, 'is completed');
-    } else {
-      listItem?.classList.remove('.completed');
-      console.log(todo.index, 'is not completed');
-    }
-  });
-}
-
-function checkTodo() {
-  checkboxes = document.querySelectorAll('.checkbox');
-
-  checkboxes.forEach((checkbox, index) => {
-    checkbox.addEventListener('change', (event) => {
-      if (todoArray[index].completed) {
-        todoArray[index].completed = false;
-      } else {
-        todoArray[index].completed = true;
-      }
-      completeTodo(event.target);
-    });
-  });
+function getTime(date: number, month: number, year: number, hour: number, minute: number) {
+  return `${year}/${month}/${date} ${hour}:${minute}`;
 }
 
 function addTodo() {
   if (todoInput.value !== '') {
-    const todoValue = todoInput.value;
+    const todoText = todoInput.value;
     if (generalBtn?.classList.contains('selected')) {
       todoCategory = 'general';
     } else if (personalBtn?.classList.contains('selected')) {
@@ -124,21 +158,35 @@ function addTodo() {
       todoCategory = 'work';
     }
 
-    const newTodo = new TodoItem(todoCategory, todoArray.length, todoValue, false);
+    const newTodo = new TodoItem(todoCategory, todoIndex, todoText, false, getTime(date, month, year, hour, minute));
     todoArray.push(newTodo);
+    todoIndex += 1;
 
-    showTodo();
+    localStorage.setItem('Todos', JSON.stringify(todoArray));
+
+    checkboxes = document.querySelectorAll<HTMLInputElement>('.checkboxes');
+
+    showTodos();
     todoInput.value = '';
     checkTodo();
   }
 }
 
-// FIXME: Bug deleting todos in random order
-function deleteTodo() {
-  const index: number = event.target.parentElement.parentElement.parentElement.dataset.id;
-  todoArray.splice(index, 1);
-  showTodo();
+// FIXME: Handledning tack!
+// TODO: fix problem with indexes
+function deleteTodo(event: MouseEvent) {
+  const todoItem = document.querySelector(`#${event.target.parentElement.id}`);
+  const itemId = todoItem.id.replace('delTodo-', '');
+  todoArray.splice(itemId, 1);
+  localStorage.setItem('Todos', JSON.stringify(todoArray));
+  showTodos();
 }
+// Deletes the clicked todo item
+todoListContainer?.addEventListener('click', (event) => {
+  if (event.target != null && event.target.matches('.deleteBtn')) {
+    deleteTodo(event);
+  }
+});
 
 function selectGeneralTab() {
   if (generalBtn?.classList.contains('selected')) {
@@ -149,7 +197,7 @@ function selectGeneralTab() {
     personalBtn?.classList.remove('selected');
     workBtn?.classList.remove('selected');
   }
-  showCategory('general');
+  showTodos();
 }
 
 function selectPersonalTab() {
@@ -161,7 +209,7 @@ function selectPersonalTab() {
     generalBtn?.classList.remove('selected');
     workBtn?.classList.remove('selected');
   }
-  showCategory('personal');
+  showTodos();
 }
 
 function selectWorkTab() {
@@ -173,25 +221,14 @@ function selectWorkTab() {
     personalBtn?.classList.remove('selected');
     generalBtn?.classList.remove('selected');
   }
-  showCategory('work');
+  showTodos();
 }
-
-// Adds class "completed" to checked todo
-todoList?.addEventListener('change', (e) => {
-  const todo = document.querySelector(`#${e.target.nextElementSibling.id}`);
-  todo?.classList.add('completed');
-});
 
 nameSubmit?.addEventListener('click', getName);
 
 todoInputSubmit?.addEventListener('click', addTodo);
 
-// Deletes the clicked todo item
-todoList?.addEventListener('click', (event) => {
-  if (event.target.matches('.delTodo')) {
-    deleteTodo();
-  }
-});
+darkLightBtn?.addEventListener('click', toggleDarkLight);
 
 generalBtn?.addEventListener('click', selectGeneralTab);
 personalBtn?.addEventListener('click', selectPersonalTab);
@@ -204,8 +241,12 @@ todoInput?.addEventListener('keyup', (event) => {
   }
 });
 
-showTodo();
+// Clear all todos, delete before publish.
+document.querySelector('#clearAll')?.addEventListener('click', () => {
+  localStorage.clear();
+  todoArray = [];
+  todoIndex = 0;
+  showTodos();
+});
 
-// localStorage.setItem('Todo', JSON.stringify(newTodo));
-// const retrievedObject = localStorage.getItem('Todo');
-// console.log(JSON.parse(retrievedObject));
+showTodos();

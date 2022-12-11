@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -9,39 +9,75 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100;400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Josefin+Slab:wght@100;400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="src/index.css">
   <title>Doer | Get it Done</title>
 </head>
 
-<body>
-  <!-- TODO: Remove class hidden before publishing-->
-  <div class="landing-page hidden" id="landingPage">
-    <h1>Welcome <br> Enter Your Name:</h1>
-    <input type="text" id="nameInput">
-    <button id="nameSubmit">Ok</button>
+<body class="
+  max-h-screen bg-gray-200 dark:bg-zinc-800 flex flex-col 
+  text-gray-800 dark:text-zinc-300 font-fira">
+  <!-- TODO: Remove class visually-hidden before publishing-->
+  <div class="
+    visually-hidden landing-page absolute w-screen h-screen 
+  bg-gray-400 dark:bg-zinc-900 flex flex-col justify-center 
+    items-center text-gray-700 z-20" id="landingPage">
+    <h1 class="text-5xl text-center mb-12">Welcome <br> Enter Your Name:</h1>
+    <input class="text-gray-800 rounded-sm shadow-md shadow-black p-1
+      dark:bg-zinc-600" type="text" id="nameInput">
+    <button class="
+      border-2 border-gray-700 mt-4 py-2 px-12 
+      bg-gray-300 dark:bg-zinc-600 text-gray-800 
+      rounded-md shadow-md shadow-black" id="nameSubmit">Ok</button>
   </div>
   <header>
+    <button class="absolute right-0 m-2" id="darkLightBtn"><span class="material-symbols-outlined">
+        dark_mode
+      </span></button>
     <div class="logo">
-      <h1>Doer</h1>
-      <span class="welcome-text">Welcome <span id="user"></span></span>
-      <h2 class="get-it-done">Get it Done</h2>
+      <h1 class="my-12 text-8xl text-center font-josefin dark:text-cyan-400 text-cyan-800">Doer</h1>
+      <div class="text-center">
+        <span class="text-2xl">Welcome <span id="user"></span></span>
+        <h2 class="">Get it Done</h2>
+      </div>
     </div>
   </header>
   <main>
-    <div class="menu" id="menu">
-      <button class="categoryBtn selected" id="generalButton">General</button>
-      <button class="categoryBtn" id="personalButton">Personal</button>
-      <button class="categoryBtn" id="workButton">Work</button>
+    <div class="w-screen px-6 flex justify-around mt-8" id="menu">
+      <button class="
+       border-gray-700 mx-px py-1 pb-2 
+        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
+        relative top-3 z-0 selected" id="generalButton">General</button>
+      <button class="
+       border-gray-700 mx-px py-1 pb-2 
+        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
+        relative top-3 z-0" id="personalButton">Personal</button>
+      <button class="
+       border-gray-700 mx-px py-1 pb-2 
+        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
+        relative top-3 z-0" id="workButton">Work</button>
     </div>
-    <div class="list" id="todoList">
-      <!-- Rendered in TS -->
+    <div class="
+      h-96 p-6 mx-2 z-10 relative 
+      bg-gray-100 dark:bg-cyan-900 shadow-md 
+      shadow-gray-900 rounded-lg" id="todoListContainer">
+      <ul id="todoUl">
+        <!-- Rendered in TS -->
+      </ul>
     </div>
-    <div class="todo-add">
-      <input type="text" id="todoInput">
-      <button id="todoInputSubmit" class="add-btn">Add</button>
+    <div class="
+      flex justify-center 
+      bg-gray-100 dark:bg-cyan-800 p-2 m-2 
+      shadow-lg shadow-gray-900 rounded-lg">
+      <input class="bg-gray-300 mr-2 px-2 w-full rounded-lg dark:bg-zinc-700 dark:text-slate-300" type="text"
+        id="todoInput">
+      <button class=" px-8 py-1 bg-cyan-800 dark:bg-cyan-500 text-white rounded-lg" id="todoInputSubmit">Add</button>
     </div>
   </main>
+  <button id="clearAll">Clear</button>
 
   <script type="module" src="/src/main.ts"></script>
 </body>

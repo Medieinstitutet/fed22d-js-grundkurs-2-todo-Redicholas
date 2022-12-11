@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.selected {
+  background: #155e75;
+  color: white;
+  top: 6px;
+  border: 1px solid #1d809f;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
