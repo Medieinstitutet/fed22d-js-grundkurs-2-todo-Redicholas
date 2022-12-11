@@ -17,7 +17,7 @@ const todoListContainer = document.querySelector('#todoListContainer');
 const todoUl = document.querySelector('#todoUl');
 
 let todoCategory: string;
-let checkboxes;
+let checkboxes: NodeListOf<HTMLInputElement>;
 let todoIndex = 0;
 
 class TodoItem {
@@ -39,7 +39,7 @@ class TodoItem {
   }
 }
 
-const todoArray: TodoItem[] = [];
+let todoArray: TodoItem[] = [];
 
 function hideLandingPage() {
   landingPage?.classList.add('visually-hidden');
@@ -56,6 +56,10 @@ function getName() {
 }
 
 function showTodos() {
+  const retrieved = localStorage.getItem('Todos');
+  if (retrieved != null) {
+    todoArray = JSON.parse(retrieved);
+  }
   if (generalBtn?.classList.contains('selected')) {
     todoCategory = 'general';
   } else if (personalBtn?.classList.contains('selected')) {
@@ -70,11 +74,11 @@ function showTodos() {
     todoArray.forEach((item) => {
       if (item.category === todoCategory) {
         todoListHtml += `
-        <li class="flex justify-between" id="todo-${item.index}">
-          <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
-          <p class="w-full ml-2" id="todo-${item.index}">${item.todoText}</p>
-          <button class="deleteBtn" id="deleteBtn-${item.index}">Delete</button>
-        </li>
+          <li class="flex justify-between" id="todo-${item.index}">
+            <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
+            <p class="w-full ml-2" id="todo-${item.index}">${item.todoText}</p>
+            <button class="deleteBtn" id="deleteBtn-${item.index}">Delete</button>
+          </li>
         `;
       }
     });
@@ -84,6 +88,7 @@ function showTodos() {
   }
 }
 
+// FIXME: Handledning tack!
 function completeTodo() {
   console.log('complete');
   todoArray.forEach((todo, i) => {
@@ -99,11 +104,7 @@ function completeTodo() {
   console.log('complete complete');
 }
 
-function checkTodo(event: MouseEvent) {
-  console.log(event);
-  console.log('check');
-  checkboxes = document.querySelectorAll<HTMLInputElement>('.checkboxes');
-
+function checkTodo() {
   checkboxes.forEach((checkbox, index) => {
     checkbox.addEventListener('change', () => {
       if (todoArray[index].completed) {
@@ -114,12 +115,11 @@ function checkTodo(event: MouseEvent) {
       completeTodo();
     });
   });
-  console.log('check complete');
 }
 
 function addTodo() {
   if (todoInput.value !== '') {
-    const todoValue = todoInput.value;
+    const todoText = todoInput.value;
     if (generalBtn?.classList.contains('selected')) {
       todoCategory = 'general';
     } else if (personalBtn?.classList.contains('selected')) {
@@ -128,9 +128,13 @@ function addTodo() {
       todoCategory = 'work';
     }
 
-    const newTodo = new TodoItem(todoCategory, todoIndex, todoValue, false);
+    const newTodo = new TodoItem(todoCategory, todoIndex, todoText, false);
     todoArray.push(newTodo);
     todoIndex += 1;
+
+    localStorage.setItem('Todos', JSON.stringify(todoArray));
+
+    checkboxes = document.querySelectorAll<HTMLInputElement>('.checkboxes');
 
     showTodos();
     todoInput.value = '';
@@ -138,11 +142,12 @@ function addTodo() {
   }
 }
 
+// FIXME: Handledning tack!
 // TODO: fix problem with indexes
 function deleteTodo(event: MouseEvent) {
-  console.log(event);
-  const todo = event.target.id;
-  console.log(todo);
+  const index: number = event.target;
+  // const todo = event.target.id;
+  todoArray.splice(index, 1);
 }
 // Deletes the clicked todo item
 todoListContainer?.addEventListener('click', (event) => {
@@ -190,9 +195,9 @@ function selectWorkTab() {
 
 // Adds class "completed" to checked todo
 todoListContainer?.addEventListener('change', (e) => {
+  console.log(e.target.parentNode.id, 'is checked');
   const todoText = document.querySelector(`#${e.target.parentNode.id}`);
   todoText?.classList.toggle('completed');
-  console.table(todoArray);
 });
 
 nameSubmit?.addEventListener('click', getName);
@@ -210,8 +215,12 @@ todoInput?.addEventListener('keyup', (event) => {
   }
 });
 
-showTodos();
+// Clear all todos, delete before publish.
+document.querySelector('#clearAll')?.addEventListener('click', () => {
+  localStorage.clear();
+  todoArray = [];
+  todoIndex = 0;
+  showTodos();
+});
 
-// localStorage.setItem('Todo', JSON.stringify(newTodo));
-// const retrievedObject = localStorage.getItem('Todo');
-// console.log(JSON.parse(retrievedObject));
+showTodos();
