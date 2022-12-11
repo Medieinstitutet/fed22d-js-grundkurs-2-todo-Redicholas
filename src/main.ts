@@ -3,6 +3,7 @@ import './index.css';
 import { gsap } from 'gsap';
 
 const landingPage = document.querySelector('#landingPage');
+const darkLightBtn = document.querySelector('#darkLightBtn');
 const nameDisplay = document.querySelector('#user');
 const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
 const nameSubmit = document.querySelector('#nameSubmit');
@@ -15,6 +16,13 @@ const todoInput = document.querySelector('#todoInput') as HTMLInputElement;
 const todoInputSubmit = document.querySelector('#todoInputSubmit');
 const todoListContainer = document.querySelector('#todoListContainer');
 const todoUl = document.querySelector('#todoUl');
+
+const time = new Date();
+const date = time.getDate();
+const month = time.getMonth() + 1;
+const year = time.getFullYear();
+const hour = time.getHours();
+const minute = time.getMinutes();
 
 let todoCategory: string;
 let checkboxes: NodeListOf<HTMLInputElement>;
@@ -29,13 +37,24 @@ class TodoItem {
 
   completed: boolean;
 
-  // TODO: Dates and deadlines
+  timeAdded: string;
 
-  constructor(category: string, index: number, todoText: string, completed: boolean) {
+  deadline: string; // TODO:
+
+  constructor(
+    category: string,
+    index: number,
+    todoText: string,
+    completed: boolean,
+    timeAdded: string,
+    deadline: string,
+  ) {
     this.category = category;
     this.index = index;
     this.todoText = todoText;
     this.completed = completed;
+    this.timeAdded = timeAdded;
+    this.deadline = deadline;
   }
 }
 
@@ -43,6 +62,10 @@ let todoArray: TodoItem[] = [];
 
 function hideLandingPage() {
   landingPage?.classList.add('visually-hidden');
+}
+
+function toggleDarkLight() {
+  document.documentElement.classList.toggle('dark');
 }
 
 function getName() {
@@ -55,6 +78,28 @@ function getName() {
   }
 }
 
+// FIXME:
+function checkTodo() {
+  checkboxes = document.querySelectorAll('.checkboxes');
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', (e) => {
+      const id = e.target.id;
+      const todoText = document.querySelector(`#${e.target.parentElement.id.replace('todoLi-', 'todoText-')}`);
+      const index: number = id.split('-')[1];
+      if (!todoArray[index].completed) {
+        todoArray[index].completed = true;
+        todoText?.classList.add('.completed');
+      } else {
+        todoArray[index].completed = false;
+        todoText?.classList.remove('.completed');
+      }
+      localStorage.setItem('Todos', JSON.stringify(todoArray));
+      console.log(todoArray);
+    });
+  });
+}
+
+// TODO: Save "completed" state when switching categories
 function showTodos() {
   const retrieved = localStorage.getItem('Todos');
   if (retrieved != null) {
@@ -74,10 +119,13 @@ function showTodos() {
     todoArray.forEach((item) => {
       if (item.category === todoCategory) {
         todoListHtml += `
-          <li class="flex justify-between" id="todo-${item.index}">
+          <li class="flex justify-between" id="todoLi-${item.index}">
             <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
-            <p class="w-full ml-2" id="todo-${item.index}">${item.todoText}</p>
-            <button class="deleteBtn" id="deleteBtn-${item.index}">Delete</button>
+            <p class="w-full ml-2" id="todoText-${item.index}">${item.todoText}</p>
+            <button class="deleteBtn" id="delTodo-${item.index}">
+            <span class="material-symbols-outlined text-sm deleteBtn">
+            delete
+            </span></button>
           </li>
         `;
       }
@@ -86,35 +134,17 @@ function showTodos() {
   if (todoUl != null) {
     todoUl.innerHTML = todoListHtml;
   }
+  checkTodo();
 }
 
-// FIXME: Handledning tack!
-function completeTodo() {
-  console.log('complete');
-  todoArray.forEach((todo, i) => {
-    const listItem = document.querySelector(`#todo-${i}`);
-    if (todo.completed) {
-      listItem?.classList.add('.completed');
-      console.log(todo.index, 'is completed');
-    } else {
-      listItem?.classList.remove('.completed');
-      console.log(todo.index, 'is not completed');
-    }
-  });
-  console.log('complete complete');
-}
+// Adds class "completed" to checked todo
+todoListContainer?.addEventListener('change', (e) => {
+  const todoText = document.querySelector(`#${e.target.parentNode.id}`);
+  todoText?.classList.toggle('completed');
+});
 
-function checkTodo() {
-  checkboxes.forEach((checkbox, index) => {
-    checkbox.addEventListener('change', () => {
-      if (todoArray[index].completed) {
-        todoArray[index].completed = false;
-      } else {
-        todoArray[index].completed = true;
-      }
-      completeTodo();
-    });
-  });
+function getTime(date: number, month: number, year: number, hour: number, minute: number) {
+  return `${year}/${month}/${date} ${hour}:${minute}`;
 }
 
 function addTodo() {
@@ -128,7 +158,7 @@ function addTodo() {
       todoCategory = 'work';
     }
 
-    const newTodo = new TodoItem(todoCategory, todoIndex, todoText, false);
+    const newTodo = new TodoItem(todoCategory, todoIndex, todoText, false, getTime(date, month, year, hour, minute));
     todoArray.push(newTodo);
     todoIndex += 1;
 
@@ -145,16 +175,17 @@ function addTodo() {
 // FIXME: Handledning tack!
 // TODO: fix problem with indexes
 function deleteTodo(event: MouseEvent) {
-  const index: number = event.target;
-  // const todo = event.target.id;
-  todoArray.splice(index, 1);
+  const todoItem = document.querySelector(`#${event.target.parentElement.id}`);
+  const itemId = todoItem.id.replace('delTodo-', '');
+  todoArray.splice(itemId, 1);
+  localStorage.setItem('Todos', JSON.stringify(todoArray));
+  showTodos();
 }
 // Deletes the clicked todo item
 todoListContainer?.addEventListener('click', (event) => {
   if (event.target != null && event.target.matches('.deleteBtn')) {
     deleteTodo(event);
   }
-  showTodos();
 });
 
 function selectGeneralTab() {
@@ -193,16 +224,11 @@ function selectWorkTab() {
   showTodos();
 }
 
-// Adds class "completed" to checked todo
-todoListContainer?.addEventListener('change', (e) => {
-  console.log(e.target.parentNode.id, 'is checked');
-  const todoText = document.querySelector(`#${e.target.parentNode.id}`);
-  todoText?.classList.toggle('completed');
-});
-
 nameSubmit?.addEventListener('click', getName);
 
 todoInputSubmit?.addEventListener('click', addTodo);
+
+darkLightBtn?.addEventListener('click', toggleDarkLight);
 
 generalBtn?.addEventListener('click', selectGeneralTab);
 personalBtn?.addEventListener('click', selectPersonalTab);

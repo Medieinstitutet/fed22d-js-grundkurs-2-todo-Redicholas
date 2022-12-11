@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 .selected {
-  background: gray;
+  background: #155e75;
   color: white;
   top: 6px;
-  border: 2px solid white;
+  border: 1px solid #1d809f;
 }
 
 .completed {
