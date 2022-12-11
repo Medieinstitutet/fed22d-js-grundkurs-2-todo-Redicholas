@@ -11,35 +11,55 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100;400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/index.css">
   <title>Doer | Get it Done</title>
 </head>
 
-<body>
+<body class="max-h-screen bg-gray-200 dark:bg-zinc-800 flex flex-col text-gray-800 dark:text-zinc-300">
   <!-- TODO: Remove class hidden before publishing-->
-  <div class="landing-page hidden" id="landingPage">
-    <h1>Welcome <br> Enter Your Name:</h1>
-    <input type="text" id="nameInput">
-    <button id="nameSubmit">Ok</button>
+  <div class="visually-hidden landing-page absolute w-screen h-screen 
+            bg-gray-400 dark:bg-zinc-900 flex flex-col justify-center 
+              items-center text-gray-700 z-20" id="landingPage">
+    <h1 class="text-5xl text-center mb-12">Welcome <br> Enter Your Name:</h1>
+    <input class="text-gray-800 rounded-sm shadow-md shadow-black p-1 dark:bg-zinc-600" type="text" id="nameInput">
+    <button class=" border-2 border-gray-700 mt-4 py-2 px-12 
+      bg-gray-300 dark:bg-zinc-600 text-gray-800 rounded-md shadow-md shadow-black" id="nameSubmit">Ok</button>
   </div>
   <header>
     <div class="logo">
-      <h1>Doer</h1>
-      <span class="welcome-text">Welcome <span id="user"></span></span>
-      <h2 class="get-it-done">Get it Done</h2>
+      <h1 class="my-12 text-8xl text-center">Doer</h1>
+      <div class="text-center">
+        <span class="text-2xl">Welcome <span id="user"></span></span>
+        <h2 class="">Get it Done</h2>
+      </div>
     </div>
   </header>
   <main>
-    <div class="menu" id="menu">
-      <button class="categoryBtn selected" id="generalButton">General</button>
-      <button class="categoryBtn" id="personalButton">Personal</button>
-      <button class="categoryBtn" id="workButton">Work</button>
+    <div class="w-screen px-6 flex justify-around mt-8" id="menu">
+      <button class="border-2 border-gray-700 mx-px py-1 pb-2 
+                      w-28 bg-gray-100 dark:bg-zinc-700 rounded-lg
+                    relative top-3 z-0 selected" id="generalButton">General</button>
+      <button class="border-2 border-gray-700 mx-px py-1 pb-2 
+                      w-28 bg-gray-100 dark:bg-zinc-700 rounded-lg
+                    relative top-3 z-0" id="personalButton">Personal</button>
+      <button class="border-2 border-gray-700 mx-px py-1 pb-2 
+                      w-28 bg-gray-100 dark:bg-zinc-700 rounded-lg
+                    relative top-3 z-0" id="workButton">Work</button>
     </div>
-    <div class="list" id="todoList">
-      <!-- Rendered in TS -->
+    <div class="h-96 p-6 mx-2 border-2 border-gray-800 z-10 relative 
+    bg-gray-100 dark:bg-zinc-700 shadow-md shadow-gray-900 rounded-lg" id="todoListContainer">
+      <ul id="todoUl">
+        <!-- Rendered in TS -->
+      </ul>
     </div>
-    <div class="todo-add">
-      <input type="text" id="todoInput">
-      <button id="todoInputSubmit" class="add-btn">Add</button>
+    <div class="flex justify-center border-2 border-gray-800 
+              bg-gray-100 dark:bg-zinc-700 p-2 m-2 
+                shadow-lg shadow-gray-900 rounded-lg">
+      <input
+        class="bg-gray-300 mx-2 px-2 w-full border-2 border-gray-700 rounded-lg dark:bg-zinc-600 dark:text-slate-300"
+        type="text" id="todoInput">
+      <button class="border-2 border-gray-700 px-8 py-1 bg-gray-500 text-white rounded-lg"
+        id="todoInputSubmit">Add</button>
     </div>
   </main>
 
