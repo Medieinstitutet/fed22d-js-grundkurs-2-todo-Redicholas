@@ -128,7 +128,7 @@ function showTodos() {
   }
   let todoListHtml = '';
   if (todoArray.length === 0) {
-    todoListHtml = '<p class="text-center">Dont you have anything to do?! <br> Add something!</p>';
+    todoListHtml = '<p class="text-center mt-8">Dont you have anything to do?! <br> Add something!</p>';
   } else {
     todoArray.forEach((item) => {
       if (item.category === todoCategory) {
@@ -139,10 +139,10 @@ function showTodos() {
             class="w-full ml-2 text-lg bg-inherit border-none outline-none"
             ></input>
             <button class="editBtn" id="editTodo-${item.index}">
-            <span class="material-symbols-outlined text-sm editBtn text-cyan-500 mr-2">edit
+            <span id="${item.index}" class="material-symbols-outlined text-lg editBtn text-cyan-500 mr-2">edit
             </span></button>
             <button class="deleteBtn" id="delTodo-${item.index}">
-            <span class="material-symbols-outlined text-sm deleteBtn text-red-800">
+            <span class="material-symbols-outlined text-lg deleteBtn text-red-800">
             delete
             </span></button>
           </li>
@@ -157,12 +157,7 @@ function showTodos() {
   showTodoCounter();
 }
 
-// Adds class "completed" to checked todo
-// todoListContainer?.addEventListener('change', (e) => {
-//   const todoText = document.querySelector(`#${e.target.parentNode.id}`);
-//   todoText?.classList.toggle('completed');
-// });
-
+// eslint-disable-next-line @typescript-eslint/no-shadow
 function getTime(date: number, month: number, year: number, hour: number, minute: number, second: number) {
   return `${year}/${month}/${date} ${hour}:${minute}:${second}`;
 }
@@ -210,14 +205,18 @@ function deleteTodo(event: MouseEvent) {
 
 function editTodo(event: Event | MouseEvent) {
   const todoText = event.target.parentElement.parentElement.childNodes[3];
+  const editIcon = event.target.parentElement.parentElement.childNodes[5].childNodes[1];
+  const todoId = event.target.id;
   todoText.readOnly = !todoText.readOnly;
   todoText.focus();
-  console.log(event.target.parentElement.parentElement.childNodes[5].childNodes[1]);
   if (!todoText.readOnly) {
-    event.target.parentElement.parentElement.childNodes[5].childNodes[1].innerText = 'Ok';
+    editIcon.innerText = 'Ok';
   } else {
-    event.target.parentElement.parentElement.childNodes[5].childNodes[1].innerText = 'Edit';
+    editIcon.innerText = 'Edit';
   }
+  todoArray[todoId].todoText = todoText.value;
+  localStorage.setItem('Todos', JSON.stringify(todoArray));
+  console.table(todoArray);
 }
 
 // Deletes the clicked todo item
