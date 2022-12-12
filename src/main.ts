@@ -135,7 +135,12 @@ function showTodos() {
         todoListHtml += `
           <li class="flex justify-between" id="todoLi-${item.index}">
             <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
-            <p class="w-full ml-2 text-lg" id="todoText-${item.index}">${item.todoText}</p>
+            <input type="text" readonly id="todoText-${item.index}" value="${item.todoText}"
+            class="w-full ml-2 text-lg bg-inherit border-none outline-none"
+            ></input>
+            <button class="editBtn" id="editTodo-${item.index}">
+            <span class="material-symbols-outlined text-sm editBtn text-cyan-500 mr-2">edit
+            </span></button>
             <button class="deleteBtn" id="delTodo-${item.index}">
             <span class="material-symbols-outlined text-sm deleteBtn text-red-800">
             delete
@@ -202,10 +207,25 @@ function deleteTodo(event: MouseEvent) {
   localStorage.setItem('Todos', JSON.stringify(todoArray));
   showTodos();
 }
+
+function editTodo(event: Event | MouseEvent) {
+  const todoText = event.target.parentElement.parentElement.childNodes[3];
+  todoText.readOnly = !todoText.readOnly;
+  todoText.focus();
+  console.log(event.target.parentElement.parentElement.childNodes[5].childNodes[1]);
+  if (!todoText.readOnly) {
+    event.target.parentElement.parentElement.childNodes[5].childNodes[1].innerText = 'Ok';
+  } else {
+    event.target.parentElement.parentElement.childNodes[5].childNodes[1].innerText = 'Edit';
+  }
+}
+
 // Deletes the clicked todo item
-todoListContainer?.addEventListener('click', (event) => {
+todoListContainer?.addEventListener('click', (event: Event | MouseEvent) => {
   if (event.target != null && event.target.matches('.deleteBtn')) {
     deleteTodo(event);
+  } else if (event.target != null && event.target.matches('.editBtn')) {
+    editTodo(event);
   }
 });
 
