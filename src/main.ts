@@ -13,6 +13,9 @@ const personalBtn = document.querySelector('#personalButton');
 const workBtn = document.querySelector('#workButton');
 
 const sortSelector = document.querySelector('#sortSelector') as HTMLSelectElement;
+const generalAmount = document.querySelector('#generalAmount');
+const personalAmount = document.querySelector('#personalAmount');
+const workAmount = document.querySelector('#workAmount');
 
 const todoInput = document.querySelector('#todoInput') as HTMLInputElement;
 const todoInputSubmit = document.querySelector('#todoInputSubmit');
@@ -20,12 +23,12 @@ const todoListContainer = document.querySelector('#todoListContainer');
 const todoUl = document.querySelector('#todoUl');
 
 const time = new Date();
-const date = time.getDate();
-const month = time.getMonth() + 1;
-const year = time.getFullYear();
-const hour = time.getHours();
-const minute = time.getMinutes();
-const second = time.getSeconds();
+const date: number = time.getDate();
+const month: number = time.getMonth() + 1;
+const year: number = time.getFullYear();
+const hour: number = time.getHours();
+const minute: number = time.getMinutes();
+const second: number = time.getSeconds();
 
 let todoCategory: string;
 // let checkboxes: NodeListOf<HTMLInputElement>;
@@ -80,13 +83,40 @@ function getName() {
   }
 }
 
+// FIXME:
+function showTodoCounter() {
+  let generalCounter = 0;
+  let personalCounter = 0;
+  let workCounter = 0;
+  todoArray.forEach((item) => {
+    if (item.category === 'general') {
+      generalCounter += 1;
+    } else if (item.category === 'personal') {
+      personalCounter += 1;
+    } else {
+      workCounter += 1;
+    }
+  });
+  if (generalAmount != null) {
+    generalAmount.innerHTML = generalCounter.toString();
+  }
+  if (personalAmount != null) {
+    personalAmount.innerHTML = personalCounter.toString();
+  }
+  if (workAmount != null) {
+    workAmount.innerHTML = workCounter.toString();
+  }
+}
+
 // TODO: Save "completed" state when switching categories
 function showTodos() {
-  const retrieved = localStorage.getItem('Todos');
+  const retrieved: string | null = localStorage.getItem('Todos');
   if (retrieved != null) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     todoArray = JSON.parse(retrieved);
   }
   todoArray.forEach((item, i) => {
+    /* eslint-disable no-param-reassign */
     item.index = i;
   });
   if (generalBtn?.classList.contains('selected')) {
@@ -107,7 +137,7 @@ function showTodos() {
             <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
             <p class="w-full ml-2 text-lg" id="todoText-${item.index}">${item.todoText}</p>
             <button class="deleteBtn" id="delTodo-${item.index}">
-            <span class="material-symbols-outlined text-sm deleteBtn text-red-700">
+            <span class="material-symbols-outlined text-sm deleteBtn text-red-800">
             delete
             </span></button>
           </li>
@@ -119,6 +149,7 @@ function showTodos() {
     todoUl.innerHTML = todoListHtml;
   }
   // checkTodo();
+  showTodoCounter();
 }
 
 // Adds class "completed" to checked todo
@@ -298,7 +329,7 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
 // }
 // localStorage.setItem('Todos', JSON.stringify(todoArray));
 // }
-let index: number;
+let index: number | null;
 let todoText: HTMLElement | null;
 
 todoUl?.addEventListener('change', (e) => {
@@ -316,8 +347,10 @@ todoUl?.addEventListener('change', (e) => {
     todoArray[index].completed = true;
     todoText?.classList.add('completed');
   }
+  console.table(todoArray);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
 });
 
 showTodos();
 // checkTodo();
+showTodoCounter();
