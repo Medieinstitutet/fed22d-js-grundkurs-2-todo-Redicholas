@@ -93,13 +93,14 @@ function showTodos() {
     todoCategory = 'general';
   } else if (personalBtn?.classList.contains('selected')) {
     todoCategory = 'personal';
+  } else {
     todoCategory = 'work';
   }
   let todoListHtml = '';
   if (todoArray.length === 0) {
     todoListHtml = '<p class="text-center">Dont you have anything to do?! <br> Add something!</p>';
   } else {
-    todoArray.forEach((item, i) => {
+    todoArray.forEach((item) => {
       if (item.category === todoCategory) {
         todoListHtml += `
           <li class="flex justify-between" id="todoLi-${item.index}">
