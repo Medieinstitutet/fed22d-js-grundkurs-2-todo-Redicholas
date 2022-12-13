@@ -5,7 +5,7 @@
 .selected {
   background: #155e75;
   color: white;
-  top: 6px;
+  /* top: 6px; */
   border: 2px solid #1d809f;
 }
 

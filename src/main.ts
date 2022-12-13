@@ -1,4 +1,3 @@
-// import './style/style.scss';
 import './index.css';
 import { gsap } from 'gsap';
 
@@ -31,7 +30,6 @@ const minute: number = time.getMinutes();
 const second: number = time.getSeconds();
 
 let todoCategory: string;
-// let checkboxes: NodeListOf<HTMLInputElement>;
 
 class TodoItem {
   category: string;
@@ -44,7 +42,7 @@ class TodoItem {
 
   timeAdded: string;
 
-  // deadline: string; // TODO:
+  deadline?: string; // TODO:
 
   constructor(
     category: string,
@@ -52,28 +50,28 @@ class TodoItem {
     todoText: string,
     completed: boolean,
     timeAdded: string,
-    // deadline: string,
+    deadline?: string,
   ) {
     this.category = category;
     this.index = index;
     this.todoText = todoText;
     this.completed = completed;
     this.timeAdded = timeAdded;
-    // this.deadline = deadline;
+    this.deadline = deadline;
   }
 }
 
 let todoArray: TodoItem[] = [];
 
-function hideLandingPage() {
+function hideLandingPage() :void {
   landingPage?.classList.add('visually-hidden');
 }
 
-function toggleDarkLight() {
+function toggleDarkLight() :void {
   document.documentElement.classList.toggle('dark');
 }
 
-function getName() {
+function getName() :void {
   const user = nameInput.value;
   if (nameDisplay != null) {
     nameDisplay.innerHTML = user;
@@ -84,7 +82,7 @@ function getName() {
 }
 
 // FIXME:
-function showTodoCounter() {
+function showTodoCounter() :void {
   let generalCounter = 0;
   let personalCounter = 0;
   let workCounter = 0;
@@ -109,7 +107,7 @@ function showTodoCounter() {
 }
 
 // TODO: Save "completed" state when switching categories
-function showTodos() {
+function showTodos() :void {
   const retrieved = localStorage.getItem('Todos') as string;
   if (retrieved != null) {
     todoArray = JSON.parse(retrieved) as TodoItem[];
@@ -162,7 +160,7 @@ function getTime() {
   return `${year}/${month}/${date} ${hour}:${minute}:${second}`;
 }
 
-function addTodo() {
+function addTodo() :void {
   if (todoInput.value !== '') {
     const todoText = todoInput.value;
     if (generalBtn?.classList.contains('selected')) {
@@ -194,14 +192,13 @@ function deleteTodo(event: MouseEvent) {
   const target = event.target as HTMLInputElement;
   const targetParent = target.parentElement as HTMLInputElement;
   const todoItem = document.querySelector(`#${targetParent.id}`) as HTMLInputElement;
-  console.log(todoItem);
   const itemId = parseInt(todoItem?.id.replace('delTodo-', ''), 10);
   todoArray.splice(itemId, 1);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
   showTodos();
 }
 
-function editTodo(event: MouseEvent) {
+function editTodo(event: MouseEvent) : void {
   const target = event.target as HTMLInputElement;
   const targetParent = target.parentElement as HTMLInputElement;
   const targetParentParent = targetParent.parentElement as HTMLInputElement;
@@ -217,10 +214,9 @@ function editTodo(event: MouseEvent) {
   }
   todoArray[todoId].todoText = todoText.value;
   localStorage.setItem('Todos', JSON.stringify(todoArray));
-  console.table(todoArray);
 }
 
-function sortbyName() {
+function sortbyName() : void {
   const sortedArray = [...todoArray];
 
   sortedArray.sort((a, b) => {
@@ -237,7 +233,7 @@ function sortbyName() {
 }
 
 // FIXME: not working
-function sortbyDateAdded() {
+function sortbyDateAdded() : void {
   const sortedArray = [...todoArray];
 
   sortedArray.sort((a, b) => {
@@ -253,7 +249,8 @@ function sortbyDateAdded() {
   showTodos();
 }
 
-function selectGeneralTab() {
+// TODO: Animation
+function selectGeneralTab() :void {
   if (generalBtn?.classList.contains('selected')) {
     personalBtn?.classList.remove('selected');
     workBtn?.classList.remove('selected');
@@ -265,7 +262,7 @@ function selectGeneralTab() {
   showTodos();
 }
 
-function selectPersonalTab() {
+function selectPersonalTab() :void {
   if (personalBtn?.classList.contains('selected')) {
     generalBtn?.classList.remove('selected');
     workBtn?.classList.remove('selected');
@@ -277,7 +274,7 @@ function selectPersonalTab() {
   showTodos();
 }
 
-function selectWorkTab() {
+function selectWorkTab() :void {
   if (workBtn?.classList.contains('selected')) {
     personalBtn?.classList.remove('selected');
     generalBtn?.classList.remove('selected');
@@ -318,6 +315,7 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
 });
 
 // TODO: Move to named function?
+// TODO: Save completed state when switching tabs
 // Checkboxes complete todos
 todoUl?.addEventListener('change', (event: Event) => {
   const retrieved = localStorage.getItem('Todos');
@@ -327,7 +325,6 @@ todoUl?.addEventListener('change', (event: Event) => {
   const numIndex = +index;
   const todoTextLi = document.querySelector(`#${targetLi.id}`) as HTMLElement;
   const todoTextEl = todoTextLi.childNodes[3] as HTMLElement;
-  console.log(targetLi);
   if (retrieved != null) {
     todoArray = JSON.parse(retrieved) as TodoItem[];
   }
