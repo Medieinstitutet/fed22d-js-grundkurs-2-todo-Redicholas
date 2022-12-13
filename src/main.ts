@@ -112,9 +112,11 @@ function showTodoCounter() {
 function showTodos() {
   const retrieved = localStorage.getItem('Todos') as string;
   if (retrieved != null) {
-    todoArray = JSON.parse(retrieved);
+    todoArray = JSON.parse(retrieved) as TodoItem[];
   }
   todoArray.forEach((item, i) => {
+    // TODO: Ok?
+    // eslint-disable-next-line no-param-reassign
     item.index = i;
   });
   if (generalBtn?.classList.contains('selected')) {
@@ -155,7 +157,8 @@ function showTodos() {
   showTodoCounter();
 }
 
-function getTime(date: number, month: number, year: number, hour: number, minute: number, second: number) {
+function getTime() {
+  // TODO: Padstart second?
   return `${year}/${month}/${date} ${hour}:${minute}:${second}`;
 }
 
@@ -175,38 +178,36 @@ function addTodo() {
       todoArray.length,
       todoText,
       false,
-      getTime(date, month, year, hour, minute, second),
+      getTime(),
     );
 
     todoArray.push(newTodo);
 
     localStorage.setItem('Todos', JSON.stringify(todoArray));
 
-    // checkboxes = document.querySelectorAll<HTMLInputElement>('.checkboxes');
-
     showTodos();
     todoInput.value = '';
-    // checkTodo();
   }
 }
+
 function deleteTodo(event: MouseEvent) {
   const target = event.target as HTMLInputElement;
   const targetParent = target.parentElement as HTMLInputElement;
-  const todoItem = document.querySelector(`#${targetParent.id}`);
+  const todoItem = document.querySelector(`#${targetParent.id}`) as HTMLInputElement;
+  console.log(todoItem);
   const itemId = parseInt(todoItem?.id.replace('delTodo-', ''), 10);
   todoArray.splice(itemId, 1);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
   showTodos();
 }
 
-// FIXME: ESLint error
 function editTodo(event: MouseEvent) {
   const target = event.target as HTMLInputElement;
   const targetParent = target.parentElement as HTMLInputElement;
   const targetParentParent = targetParent.parentElement as HTMLInputElement;
   const todoText = targetParentParent.childNodes[3] as HTMLInputElement;
   const editIcon = targetParentParent.childNodes[5].childNodes[1] as HTMLSpanElement;
-  const todoId = target.id;
+  const todoId = target.id as unknown as number;
   todoText.readOnly = !todoText.readOnly;
   todoText.focus();
   if (!todoText.readOnly) {
@@ -235,7 +236,7 @@ function sortbyName() {
   showTodos();
 }
 
-// FIXME:
+// FIXME: not working
 function sortbyDateAdded() {
   const sortedArray = [...todoArray];
 
@@ -294,8 +295,6 @@ todoInputSubmit?.addEventListener('click', addTodo);
 
 darkLightBtn?.addEventListener('click', toggleDarkLight);
 
-// FIXME:
-
 sortSelector?.addEventListener('change', () => {
   if (sortSelector?.value === 'name') {
     sortbyName();
@@ -318,6 +317,7 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
   showTodos();
 });
 
+// TODO: Move to named function?
 // Checkboxes complete todos
 todoUl?.addEventListener('change', (event: Event) => {
   const retrieved = localStorage.getItem('Todos');
@@ -359,5 +359,4 @@ personalBtn?.addEventListener('click', selectPersonalTab);
 workBtn?.addEventListener('click', selectWorkTab);
 
 showTodos();
-// checkTodo();
 showTodoCounter();
