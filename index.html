@@ -1,24 +1,110 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- TODO: glöm ej att byta språk här -->
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/ico" href="/js-template/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projekt</title>
-    <script type="module" crossorigin src="/js-template/assets/index.288365a0.js"></script>
-    <link rel="stylesheet" href="/js-template/assets/index.09951560.css">
-  </head>
-  <body>
-    <main>
-      <div class="app" id="app"></div> <!-- TODO: går bra att radera -->
-      <!-- TODO: skriv din kod här, innan script-taggen -->
-    </main>
+<html lang="en" class="dark">
 
-    <!-- TODO
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/ico" href="/fed22d-js-grundkurs-2-todo-Redicholas/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Josefin+Slab:wght@100;400&display=swap"
+    rel="stylesheet">
+  
+  <title>Doer | Get it Done</title>
+  <script type="module" crossorigin src="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.0a35e2b1.js"></script>
+  <link rel="stylesheet" href="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.910c15ae.css">
+</head>
+
+<body class="
+  md:w-3/4 md:m-auto lg:w-1/2
+  max-h-screen bg-gray-200 dark:bg-zinc-800 flex flex-col 
+  text-gray-800 dark:text-zinc-300 font-fira">
+  <!-- TODO: Remove class visually-hidden before publishing-->
+  <div class="
+    visually-hidden landing-page absolute w-screen h-screen 
+  bg-gray-400 dark:bg-zinc-800 flex flex-col justify-center 
+    items-center dark:text-cyan-400 text-cyan-700 z-20" id="landingPage">
+    <h1 class="text-5xl text-center mb-12">Welcome <br> Enter Your Name:</h1>
+    <input class="text-cyan-700 rounded-sm shadow-md shadow-black p-1
+      dark:bg-zinc-600 dark:text-cyan-400 border-none outline-none" type="text" id="nameInput">
+    <button class="
+      border-2 border-gray-700 mt-4 py-2 px-12
+      bg-gray-300 text-cyan-700  dark:bg-zinc-600 dark:text-cyan-400
+      rounded-md shadow-md shadow-black" id="nameSubmit">Ok</button>
+  </div>
+  <header>
+    <button class="absolute right-0 m-2" id="darkLightBtn"><span class="material-symbols-outlined">
+        dark_mode
+      </span></button>
+    <div class="logo">
+      <h1 class="my-12 text-8xl text-center font-josefin dark:text-cyan-400 text-cyan-800">Doer</h1>
+      <div class="text-center">
+        <span class="text-2xl">Welcome <span id="user"></span></span>
+        <h2 class="dark:text-cyan-400 text-cyan-600">Get it Done</h2>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="w-screen px-6 flex justify-around mt-8 md:w-3/4 md:mx-auto" id="menu">
+      <span id="generalAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
+            rounded-full text-center text-gray-900 z-20">
+      </span>
+      <button class="
+       border-gray-700 mx-px py-1 pb-2 
+        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
+        relative top-3 z-0 selected" id="generalButton">General</button>
+      <span id="personalAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
+            rounded-full text-center text-gray-900 z-20">
+      </span>
+      <button class="
+       border-gray-700 mx-px py-1 pb-2 
+        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
+        relative top-3 z-0" id="personalButton">Personal</button>
+      <span id="workAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
+            rounded-full text-center text-gray-900 z-20">
+      </span>
+      <button class="
+       border-gray-700 mx-px py-1 pb-2 
+        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
+        relative top-3 z-0" id="workButton">Work</button>
+    </div>
+    <div class="
+      h-96 p-6 mx-2 z-10 relative overflow-scroll
+      bg-gray-100 dark:bg-cyan-900 shadow-md 
+      shadow-gray-400 dark:shadow-gray-900 rounded-lg" id="todoListContainer">
+      <select name="sort" id="sortSelector" class="p-2 text-sm bg-gray-200 dark:bg-cyan-800 rounded-lg">
+        <option id="dateAddedSort" value="date-added">Date added</option>
+        <option id="nameSort" value="name">Name</option>
+        <option id="deadlineSort" value="deadline">Deadline</option>
+      </select>
+      <ul id="todoUl">
+        <!-- Rendered in TS -->
+      </ul>
+    </div>
+    <div class="
+      flex justify-center 
+      bg-gray-100 dark:bg-cyan-800 p-2 m-2 
+      shadow-lg shadow-gray-400 dark:shadow-gray-900 rounded-lg">
+
+      <input class="bg-gray-300 mr-2 px-2 w-full rounded-lg dark:bg-zinc-700 dark:text-slate-300" type="text"
+        id="todoInput">
+      <button class=" px-8 py-1 bg-cyan-800 dark:bg-cyan-500 text-white rounded-lg" id="todoInputSubmit">Add</button>
+    </div>
+  </main>
+  <button id="clearAll" class="absolute bottom-2 right-2">Clear</button>
+
+  
+</body>
+
+</html>
+
+
+<!-- TODO
     - Validera HTML (kopiera den renderade HTML-koden): https://validator.w3.org/#validate_by_input
     - Kontrollera tillgänglighet: https://www.a11yproject.com/checklist/ & Chrome Lighthouse/Firefox Accessibility Tools
     - Validera genererade CSS: https://jigsaw.w3.org/css-validator/#validate_by_input
     -->
-    
-  </body>
-</html>
