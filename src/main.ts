@@ -110,13 +110,11 @@ function showTodoCounter() {
 
 // TODO: Save "completed" state when switching categories
 function showTodos() {
-  const retrieved: string | null = localStorage.getItem('Todos');
+  const retrieved = localStorage.getItem('Todos') as string;
   if (retrieved != null) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     todoArray = JSON.parse(retrieved);
   }
   todoArray.forEach((item, i) => {
-    /* eslint-disable no-param-reassign */
     item.index = i;
   });
   if (generalBtn?.classList.contains('selected')) {
@@ -136,8 +134,8 @@ function showTodos() {
           <li class="flex justify-between" id="todoLi-${item.index}">
             <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
             <input type="text" readonly id="todoText-${item.index}" value="${item.todoText}"
-            class="w-full ml-2 text-lg bg-inherit border-none outline-none"
-            ></input>
+            class="w-full ml-2 text-sm bg-inherit border-none outline-none">
+            </input>
             <button class="editBtn" id="editTodo-${item.index}">
             <span id="${item.index}" class="material-symbols-outlined text-lg editBtn text-cyan-500 mr-2">edit
             </span></button>
@@ -157,7 +155,6 @@ function showTodos() {
   showTodoCounter();
 }
 
-// eslint-disable-next-line @typescript-eslint/no-shadow
 function getTime(date: number, month: number, year: number, hour: number, minute: number, second: number) {
   return `${year}/${month}/${date} ${hour}:${minute}:${second}`;
 }
@@ -192,21 +189,24 @@ function addTodo() {
     // checkTodo();
   }
 }
-
-// FIXME: Handledning tack!
-// TODO: fix problem with indexes
 function deleteTodo(event: MouseEvent) {
-  const todoItem = document.querySelector(`#${event.target.parentElement.id}`);
-  const itemId = todoItem.id.replace('delTodo-', '');
+  const target = event.target as HTMLInputElement;
+  const targetParent = target.parentElement as HTMLInputElement;
+  const todoItem = document.querySelector(`#${targetParent.id}`);
+  const itemId = parseInt(todoItem?.id.replace('delTodo-', ''), 10);
   todoArray.splice(itemId, 1);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
   showTodos();
 }
 
-function editTodo(event: Event | MouseEvent) {
-  const todoText = event.target.parentElement.parentElement.childNodes[3];
-  const editIcon = event.target.parentElement.parentElement.childNodes[5].childNodes[1];
-  const todoId = event.target.id;
+// FIXME: ESLint error
+function editTodo(event: MouseEvent) {
+  const target = event.target as HTMLInputElement;
+  const targetParent = target.parentElement as HTMLInputElement;
+  const targetParentParent = targetParent.parentElement as HTMLInputElement;
+  const todoText = targetParentParent.childNodes[3] as HTMLInputElement;
+  const editIcon = targetParentParent.childNodes[5].childNodes[1] as HTMLSpanElement;
+  const todoId = target.id;
   todoText.readOnly = !todoText.readOnly;
   todoText.focus();
   if (!todoText.readOnly) {
@@ -218,15 +218,6 @@ function editTodo(event: Event | MouseEvent) {
   localStorage.setItem('Todos', JSON.stringify(todoArray));
   console.table(todoArray);
 }
-
-// Deletes the clicked todo item
-todoListContainer?.addEventListener('click', (event: Event | MouseEvent) => {
-  if (event.target != null && event.target.matches('.deleteBtn')) {
-    deleteTodo(event);
-  } else if (event.target != null && event.target.matches('.editBtn')) {
-    editTodo(event);
-  }
-});
 
 function sortbyName() {
   const sortedArray = [...todoArray];
@@ -313,10 +304,6 @@ sortSelector?.addEventListener('change', () => {
   }
 });
 
-generalBtn?.addEventListener('click', selectGeneralTab);
-personalBtn?.addEventListener('click', selectPersonalTab);
-workBtn?.addEventListener('click', selectWorkTab);
-
 // Enter key adds todo
 todoInput?.addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
@@ -331,44 +318,45 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
   showTodos();
 });
 
-// function checkTodo() {
-// const retrieved = localStorage.getItem('Todos');
-// if (retrieved != null) {
-//   todoArray = JSON.parse(retrieved);
-// }
-// const index: number = target.id.replace('checkbox-', '');
-// console.log(target);
-
-// let todoText = document.querySelector(`#${target.parentNode.id}`);
-// todoText?.classList.toggle('completed');
-// if (todoArray[index].completed) {
-//   todoArray[index].completed = false;
-// } else {
-//   todoArray[index].completed = true;
-// }
-// localStorage.setItem('Todos', JSON.stringify(todoArray));
-// }
-let index: number | null;
-let todoText: HTMLElement | null;
-
-todoUl?.addEventListener('change', (e) => {
+// Checkboxes complete todos
+todoUl?.addEventListener('change', (event: Event) => {
   const retrieved = localStorage.getItem('Todos');
-  index = e.target.id.replace('checkbox-', '');
-  todoText = document.querySelector(`#${e.target.parentNode.id}`);
+  const targetCheckbox = event.target as HTMLInputElement;
+  const targetLi = targetCheckbox.parentNode as HTMLInputElement;
+  const index = targetCheckbox.id.replace('checkbox-', '');
+  const numIndex = +index;
+  const todoTextLi = document.querySelector(`#${targetLi.id}`) as HTMLElement;
+  const todoTextEl = todoTextLi.childNodes[3] as HTMLElement;
+  console.log(targetLi);
   if (retrieved != null) {
-    todoArray = JSON.parse(retrieved);
+    todoArray = JSON.parse(retrieved) as TodoItem[];
   }
-  // todoText?.classList.toggle('completed');
-  if (todoArray[index].completed) {
-    todoArray[index].completed = false;
-    todoText?.classList.remove('completed');
+  if (todoArray[numIndex].completed) {
+    todoArray[numIndex].completed = false;
+    todoTextEl?.classList.toggle('completed');
   } else {
-    todoArray[index].completed = true;
-    todoText?.classList.add('completed');
+    todoArray[numIndex].completed = true;
+    todoTextEl?.classList.toggle('completed');
   }
   console.table(todoArray);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
 });
+
+// Fetches the event and runs delete or edit function
+todoListContainer?.addEventListener('click', (event: MouseEvent | Event) => {
+  const mouseEvent = event as MouseEvent;
+  const target = mouseEvent.target as HTMLElement;
+
+  if (target != null && target.matches('.deleteBtn')) {
+    deleteTodo(mouseEvent);
+  } else if (event.target != null && target.matches('.editBtn')) {
+    editTodo(mouseEvent);
+  }
+});
+
+generalBtn?.addEventListener('click', selectGeneralTab);
+personalBtn?.addEventListener('click', selectPersonalTab);
+workBtn?.addEventListener('click', selectWorkTab);
 
 showTodos();
 // checkTodo();
