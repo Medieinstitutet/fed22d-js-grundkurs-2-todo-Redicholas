@@ -4,8 +4,8 @@ module.exports = {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      fira: ['Fira Mono', 'monospace'],
-      josefin: ['Josefin Slab', 'serif'],
+      rubik: ['Rubik', 'sans-serif'],
+      josefin: ['Josefin Slab', 'sans-serif'],
     },
     extend: {},
   },

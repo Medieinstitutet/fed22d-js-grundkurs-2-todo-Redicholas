@@ -137,7 +137,8 @@ function showTodos() :void {
             class="w-full ml-2 text-sm bg-inherit border-none outline-none">
             </input>
             <button class="editBtn" id="editTodo-${item.index}">
-            <span id="${item.index}" class="material-symbols-outlined text-lg editBtn text-cyan-500 mr-2">edit
+            <span id="${item.index}" class="editBtn material-symbols-outlined text-lg
+            dark:text-zinc-200 mr-2">edit
             </span></button>
             <button class="deleteBtn" id="delTodo-${item.index}">
             <span class="material-symbols-outlined text-lg deleteBtn text-red-800">
