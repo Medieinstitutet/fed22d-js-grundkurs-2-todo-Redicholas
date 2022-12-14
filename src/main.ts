@@ -139,8 +139,10 @@ function showTodos() :void {
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
             <button class="editBtn" id="editTodo-${item.index}">
-              <span id="${item.index}" class="editBtn material-symbols-outlined text-lg
-              dark:text-zinc-200 mr-2">edit
+              <span id="${item.index}" 
+              class="editBtn material-symbols-outlined text-lg
+              dark:text-zinc-200 mr-2">
+              edit
               </span>
             </button>
             <button class="deleteBtn" id="delTodo-${item.index}">
@@ -238,16 +240,15 @@ function sortbyName() : void {
   showTodos();
 }
 
-// FIXME: not working
-function sortbyDateAdded() : void {
+function sortbyTimeAdded() : void {
   const sortedArray = [...todoArray];
 
   sortedArray.sort((a, b) => {
     if (a.timeAdded < b.timeAdded) {
-      return -1;
+      return 1;
     }
     if (a.timeAdded > b.timeAdded) {
-      return 1;
+      return -1;
     }
     return 0;
   });
@@ -300,8 +301,8 @@ darkLightBtn?.addEventListener('click', toggleDarkLight);
 sortSelector?.addEventListener('change', () => {
   if (sortSelector?.value === 'name') {
     sortbyName();
-  } else if (sortSelector?.value === 'dateAdded') {
-    sortbyDateAdded();
+  } else if (sortSelector?.value === 'timeAdded') {
+    sortbyTimeAdded();
   }
 });
 
@@ -320,7 +321,6 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
 });
 
 // TODO: Move to named function
-// TODO: Save completed state when switching tabs
 // Checkboxes complete todos
 todoUl?.addEventListener('change', (event: Event) => {
   const retrieved = localStorage.getItem('Todos');
