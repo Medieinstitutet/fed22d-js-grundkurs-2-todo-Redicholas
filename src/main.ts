@@ -22,15 +22,6 @@ const todoInputSubmit = document.querySelector('#todoInputSubmit');
 const todoListContainer = document.querySelector('#todoListContainer');
 const todoUl = document.querySelector('#todoUl');
 
-// FIXME: Date only made once, not updated
-const time = new Date();
-const date: Date = time.getDate() as unknown as Date;
-const month: Date = time.getMonth() + 1 as unknown as Date;
-const year: Date = time.getFullYear() as unknown as Date;
-const hour: Date = time.getHours() as unknown as Date;
-const minute: Date = time.getMinutes() as unknown as Date;
-const second: Date = time.getSeconds() as unknown as Date;
-
 let todoCategory: string;
 
 class TodoItem {
@@ -145,14 +136,14 @@ function showTodos() :void {
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
             <p title="Added: ${item.timeAdded}" class="mr-2 flex flex-col justify-center text-sm">${item.deadline}</p>
-            <button class="editBtn" id="editTodo-${item.index}">
+            <button class="editBtn" id="editTodo-${item.index}" title="Edit">
               <span id="${item.index}" 
               class="editBtn material-symbols-outlined text-lg
               dark:text-zinc-200 mr-2">
               edit
               </span>
             </button>
-            <button class="deleteBtn" id="delTodo-${item.index}">
+            <button class="deleteBtn" id="delTodo-${item.index}" title="Delete">
               <span class="material-symbols-outlined text-lg deleteBtn text-red-700">
               delete
               </span>
@@ -169,6 +160,14 @@ function showTodos() :void {
 }
 
 function getTime() {
+  const time = new Date();
+  const date: Date = time.getDate() as unknown as Date;
+  const month: Date = time.getMonth() + 1 as unknown as Date;
+  const year: Date = time.getFullYear() as unknown as Date;
+  const hour: Date = time.getHours() as unknown as Date;
+  const minute: Date = time.getMinutes() as unknown as Date;
+  const second: Date = time.getSeconds() as unknown as Date;
+
   return `
   ${year as unknown as string}/${month as unknown as string}/${date as unknown as string}
   ${hour as unknown as string}:${minute as unknown as string}:${second as unknown as string}
