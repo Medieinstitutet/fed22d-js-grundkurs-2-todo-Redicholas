@@ -85,7 +85,6 @@ function getName() :void {
   }
 }
 
-// FIXME:
 function showTodoCounter() :void {
   let generalCounter = 0;
   let personalCounter = 0;
@@ -110,14 +109,12 @@ function showTodoCounter() :void {
   }
 }
 
-// TODO: Save "completed" state when switching categories
 function showTodos() :void {
   const retrieved = localStorage.getItem('Todos') as string;
   if (retrieved != null) {
     todoArray = JSON.parse(retrieved) as TodoItem[];
   }
   todoArray.forEach((item, i) => {
-    // TODO: Ok?
     // eslint-disable-next-line no-param-reassign
     item.index = i;
   });
@@ -134,11 +131,12 @@ function showTodos() :void {
   } else {
     todoArray.forEach((item) => {
       if (item.category === todoCategory) {
+        const completed = item.completed ? 'checked' : '';
         todoListHtml += `
           <li class="flex justify-between" id="todoLi-${item.index}">
-            <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
+            <input type="checkbox" ${completed} class="checkboxes" id="checkbox-${item.index}">
             <input type="text" readonly id="todoText-${item.index}" value="${item.todoText}"
-              class="w-full ml-2 text-sm bg-inherit border-none outline-none">
+              class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
             <button class="editBtn" id="editTodo-${item.index}">
               <span id="${item.index}" class="editBtn material-symbols-outlined text-lg
@@ -158,13 +156,10 @@ function showTodos() :void {
   if (todoUl != null) {
     todoUl.innerHTML = todoListHtml;
   }
-  // checkTodo();
   showTodoCounter();
 }
 
 function getTime() {
-  // TODO: Padstart second?
-  // second.padStart(2, '0');
   return `
   ${year as unknown as string}/${month as unknown as string}/${date as unknown as string}
   ${hour as unknown as string}:${minute as unknown as string}:${second as unknown as string}
@@ -340,10 +335,10 @@ todoUl?.addEventListener('change', (event: Event) => {
   }
   if (todoArray[numIndex].completed) {
     todoArray[numIndex].completed = false;
-    todoTextEl?.classList.toggle('completed');
+    todoTextEl?.classList.toggle('checked');
   } else {
     todoArray[numIndex].completed = true;
-    todoTextEl?.classList.toggle('completed');
+    todoTextEl?.classList.toggle('checked');
   }
   console.table(todoArray);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
