@@ -1,33 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark h-screen">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/ico" href="/fed22d-js-grundkurs-2-todo-Redicholas/favicon.ico" />
+  <link rel="icon" type="image/ico" href="/fed22d-js-grundkurs-2-todo-Redicholas/brain.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Josefin+Slab:wght@100;400&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100&family=Rubik:wght@300&display=swap"
     rel="stylesheet">
   
   <title>Doer | Get it Done</title>
-  <script type="module" crossorigin src="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.0a35e2b1.js"></script>
-  <link rel="stylesheet" href="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.910c15ae.css">
+  <script type="module" crossorigin src="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.411db440.js"></script>
+  <link rel="stylesheet" href="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.3328627a.css">
 </head>
 
 <body class="
-  md:w-3/4 md:m-auto lg:w-1/2
-  max-h-screen bg-gray-200 dark:bg-zinc-800 flex flex-col 
-  text-gray-800 dark:text-zinc-300 font-fira">
+    md:w-3/4 md:m-auto lg:w-1/2 max-h-screen flex flex-col font-rubik
+    bg-gradient-to-b from-zinc-100 to-rose-100 text-gray-800
+   dark:text-zinc-200 dark:from-zinc-800 dark:to-stone-800">
   <!-- TODO: Remove class visually-hidden before publishing-->
+  <!-- Landing page -->
   <div class="
     visually-hidden landing-page absolute w-screen h-screen 
-  bg-gray-400 dark:bg-zinc-800 flex flex-col justify-center 
-    items-center dark:text-cyan-400 text-cyan-700 z-20" id="landingPage">
+  bg-gray-400 dark:bg-zinc-800 flex flex-col justify-center items-center
+    dark:text-cyan-400 text-cyan-700 z-20" id="landingPage">
     <h1 class="text-5xl text-center mb-12">Welcome <br> Enter Your Name:</h1>
     <input class="text-cyan-700 rounded-sm shadow-md shadow-black p-1
       dark:bg-zinc-600 dark:text-cyan-400 border-none outline-none" type="text" id="nameInput">
@@ -40,9 +39,12 @@
     <button class="absolute right-0 m-2" id="darkLightBtn"><span class="material-symbols-outlined">
         dark_mode
       </span></button>
+    <!-- Header -->
     <div class="logo">
-      <h1 class="my-12 text-8xl text-center font-josefin dark:text-cyan-400 text-cyan-800">Doer</h1>
+      <h1 class="my-12 text-8xl text-center font-josefin  font-thin dark:text-cyan-400 text-cyan-700">
+        Doer</h1>
       <div class="text-center">
+        <!-- Header welcome text -->
         <span class="text-2xl">Welcome <span id="user"></span></span>
         <h2 class="dark:text-cyan-400 text-cyan-600">Get it Done</h2>
       </div>
@@ -51,32 +53,37 @@
   <main>
     <div class="w-screen px-6 flex justify-around mt-8 md:w-3/4 md:mx-auto" id="menu">
       <span id="generalAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
-            rounded-full text-center text-gray-900 z-20">
+                  rounded-full text-center text-gray-900 z-20">
       </span>
+      <!-- General tab -->
       <button class="
-       border-gray-700 mx-px py-1 pb-2 
-        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
-        relative top-3 z-0 selected" id="generalButton">General</button>
+       mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 border-indigo-300 selected
+       dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+       bg-indigo-100 hover:bg-violet-300" id="generalButton">General</button>
       <span id="personalAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
             rounded-full text-center text-gray-900 z-20">
       </span>
+      <!-- Personal tab -->
       <button class="
-       border-gray-700 mx-px py-1 pb-2 
-        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
-        relative top-3 z-0" id="personalButton">Personal</button>
+      mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 border-indigo-300
+      dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+      bg-indigo-100 hover:bg-violet-300" id="personalButton">Personal</button>
       <span id="workAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
             rounded-full text-center text-gray-900 z-20">
       </span>
+      <!-- Work tab -->
       <button class="
-       border-gray-700 mx-px py-1 pb-2 
-        w-28 bg-gray-100 dark:bg-cyan-900 rounded-lg
-        relative top-3 z-0" id="workButton">Work</button>
+      mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 border-indigo-300
+      dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+      bg-indigo-100 hover:bg-violet-300" id="workButton">Work</button>
     </div>
+    <!-- Todo container -->
     <div class="
       h-96 p-6 mx-2 z-10 relative overflow-scroll
-      bg-gray-100 dark:bg-cyan-900 shadow-md 
+      from-blue-100 to-cyan-100 bg-gradient-to-b dark:from-cyan-900 dark:to-cyan-700 shadow-md 
       shadow-gray-400 dark:shadow-gray-900 rounded-lg" id="todoListContainer">
-      <select name="sort" id="sortSelector" class="p-2 text-sm bg-gray-200 dark:bg-cyan-800 rounded-lg">
+      <!-- Sort selector -->
+      <select name="sort" id="sortSelector" class="p-2 text-sm bg-cyan-100 dark:bg-cyan-800 rounded-lg">
         <option id="dateAddedSort" value="date-added">Date added</option>
         <option id="nameSort" value="name">Name</option>
         <option id="deadlineSort" value="deadline">Deadline</option>
@@ -85,18 +92,21 @@
         <!-- Rendered in TS -->
       </ul>
     </div>
+    <!-- Add todo input container -->
     <div class="
       flex justify-center 
-      bg-gray-100 dark:bg-cyan-800 p-2 m-2 
+      bg-cyan-100 dark:bg-cyan-700 p-2 m-2 
       shadow-lg shadow-gray-400 dark:shadow-gray-900 rounded-lg">
-
-      <input class="bg-gray-300 mr-2 px-2 w-full rounded-lg dark:bg-zinc-700 dark:text-slate-300" type="text"
-        id="todoInput">
-      <button class=" px-8 py-1 bg-cyan-800 dark:bg-cyan-500 text-white rounded-lg" id="todoInputSubmit">Add</button>
+      <!-- Todo input -->
+      <input class="bg-gray-300 mr-2 px-2 w-full rounded-lg 
+                  dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-slate-300
+                  border-none outline-none" type="text" id="todoInput">
+      <!-- Add todo button -->
+      <button class=" px-8 py-1 bg-cyan-600 dark:bg-cyan-500 dark:hover:bg-amber-400 text-white rounded-lg"
+        id="todoInputSubmit">Add</button>
     </div>
   </main>
   <button id="clearAll" class="absolute bottom-2 right-2">Clear</button>
-
   
 </body>
 
