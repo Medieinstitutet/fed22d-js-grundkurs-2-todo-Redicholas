@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark h-screen">
+<html lang="en" class="h-screen dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -22,16 +22,18 @@
   <!-- TODO: Remove class visually-hidden before publishing-->
   <!-- Landing page -->
   <div class="
-    visually-hidden landing-page absolute w-screen h-screen 
-  bg-gray-400 dark:bg-zinc-800 flex flex-col justify-center items-center
-    dark:text-cyan-400 text-cyan-700 z-20" id="landingPage">
-    <h1 class="text-5xl text-center mb-12">Welcome <br> Enter Your Name:</h1>
-    <input class="text-cyan-700 rounded-sm shadow-md shadow-black p-1
-      dark:bg-zinc-600 dark:text-cyan-400 border-none outline-none" type="text" id="nameInput">
+       landing-page absolute w-screen h-screen flex flex-col justify-center items-center
+       bg-gradient-to-b z-30
+     dark:from-zinc-900 dark:to-stone-800 dark:text-cyan-400
+     bg-gray-400 text-cyan-700" id="landingPage">
+    <h1 class="text-5xl text-center mb-12 font-josefin">Welcome <br> Enter Your Name:</h1>
+    <input class="
+      text-cyan-700 rounded-sm shadow-md shadow-gray-500 p-1 hover:bg-cyan-50
+      dark:bg-zinc-600 dark:text-cyan-400 dark:shadow-black border-none outline-none" type="text" id="nameInput">
     <button class="
-      border-2 border-gray-700 mt-4 py-2 px-12
-      bg-gray-300 text-cyan-700  dark:bg-zinc-600 dark:text-cyan-400
-      rounded-md shadow-md shadow-black" id="nameSubmit">Ok</button>
+      border-2 border-gray-700 mt-4 py-2 px-12 rounded-md shadow-md
+      bg-cyan-100 text-cyan-700  dark:bg-zinc-600 dark:text-cyan-400 dark:shadow-black
+      shadow-gray-500 hover:bg-cyan-300" id="nameSubmit">Ok</button>
   </div>
   <header>
     <button class="absolute right-0 m-2" id="darkLightBtn"><span class="material-symbols-outlined">
@@ -39,7 +41,9 @@
       </span></button>
     <!-- Header -->
     <div class="logo">
-      <h1 class="my-12 text-8xl text-center font-josefin  font-thin dark:text-cyan-400 text-cyan-700">
+      <h1 class="
+        my-6 text-8xl text-center font-josefin 
+        font-thin dark:text-cyan-400 text-cyan-700">
         Doer</h1>
       <div class="text-center">
         <!-- Header welcome text -->
@@ -50,30 +54,36 @@
   </header>
   <main>
     <div class="w-screen px-6 flex justify-around mt-8 md:w-3/4 md:mx-auto" id="menu">
-      <span id="generalAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
-                  rounded-full text-center text-gray-900 z-20">
-      </span>
       <!-- General tab -->
-      <button class="
-       mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 border-indigo-300 selected
-       dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
-       bg-indigo-100 hover:bg-violet-300" id="generalButton">General</button>
-      <span id="personalAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
-            rounded-full text-center text-gray-900 z-20">
+      <span id="generalAmount" class="
+          relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-amber-300
+          rounded-full text-center text-gray-900 z-20">
       </span>
-      <!-- Personal tab -->
       <button class="
-      mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 border-indigo-300
-      dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
-      bg-indigo-100 hover:bg-violet-300" id="personalButton">Personal</button>
-      <span id="workAmount" class="relative left-2 bottom-2 h-6 w-6 bg-orange-400 visually-hidden
-            rounded-full text-center text-gray-900 z-20">
+        mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 
+        transition-all selected
+        dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+        bg-indigo-100 hover:bg-violet-300" id="generalButton">General</button>
+      <!-- Personal tab -->
+      <span id="personalAmount" class="
+        relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-amber-300
+        rounded-full text-center text-gray-900 z-20">
+      </span>
+      <button class="
+        mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 
+        transition-all
+        dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+        bg-indigo-100 hover:bg-violet-300" id="personalButton">Personal</button>
+      <span id="workAmount" class="
+        relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-amber-300
+        rounded-full text-center text-gray-900 z-20">
       </span>
       <!-- Work tab -->
       <button class="
-      mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 border-indigo-300
-      dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
-      bg-indigo-100 hover:bg-violet-300" id="workButton">Work</button>
+        mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 
+        transition-all
+        dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+        bg-indigo-100 hover:bg-violet-300" id="workButton">Work</button>
     </div>
     <!-- Todo container -->
     <div class="
@@ -96,15 +106,18 @@
       bg-cyan-100 dark:bg-cyan-700 p-2 m-2 
       shadow-lg shadow-gray-400 dark:shadow-gray-900 rounded-lg">
       <!-- Todo input -->
-      <input class="bg-gray-300 mr-2 px-2 w-full rounded-lg 
-                  dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-slate-300
-                  border-none outline-none" type="text" id="todoInput">
+      <input class=" 
+        mr-2 px-2 w-full rounded-lg 
+        bg-gray-300 hover:bg-gray-400
+        dark:bg-zinc-700 hover:dark:bg-zinc-600 transition dark:text-slate-300
+        border-none outline-none" type="text" id="todoInput">
       <!-- Add todo button -->
-      <button class=" px-8 py-1 bg-cyan-600 dark:bg-cyan-500 dark:hover:bg-amber-400 text-white rounded-lg"
+      <button
+        class=" px-8 py-1 bg-cyan-600 hover:bg-violet-300 dark:bg-cyan-500 dark:hover:bg-amber-400 transition text-white rounded-lg"
         id="todoInputSubmit">Add</button>
     </div>
   </main>
-  <button id="clearAll" class="absolute bottom-2 right-2">Clear</button>
+  <button id="clearAll" class="absolute top-2 left-2">Clear</button>
   <script type="module" src="/src/main.ts"></script>
 </body>
 
