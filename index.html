@@ -13,14 +13,14 @@
     rel="stylesheet">
   
   <title>Doer | Get it Done</title>
-  <script type="module" crossorigin src="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.d6bfff11.js"></script>
-  <link rel="stylesheet" href="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.fff6cd1f.css">
+  <script type="module" crossorigin src="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.5a571d18.js"></script>
+  <link rel="stylesheet" href="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.c6f56046.css">
 </head>
 
 <body class="
-    md:w-3/4 md:m-auto lg:w-1/2 max-h-screen flex flex-col font-rubik
-    bg-gradient-to-b from-zinc-100 to-rose-100 text-gray-800
-   dark:text-zinc-200 dark:from-zinc-800 dark:to-stone-800">
+    md:w-3/4 md:m-auto mx-2 lg:w-1/2 max-h-screen flex flex-col font-rubik
+    bg-gradient-to-tr from-zinc-100 to-rose-100 text-gray-800
+   dark:text-zinc-200 dark:from-zinc-800 dark:to-stone-900">
   <!-- TODO: Remove class visually-hidden before publishing-->
   <!-- Landing page -->
   <div class="
@@ -55,7 +55,7 @@
     </div>
   </header>
   <main>
-    <div class="w-screen px-6 flex justify-around mt-8 md:w-3/4 md:mx-auto" id="menu">
+    <div class="w-screen px-6 flex justify-around mt-8 sm:w-3/4 md:w-3/4 mx-auto" id="menu">
       <!-- General tab -->
       <span id="generalAmount" class="
           relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
@@ -76,11 +76,11 @@
         transition-all
         dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
         bg-indigo-100 hover:bg-violet-300" id="personalButton">Personal</button>
+      <!-- Work tab -->
       <span id="workAmount" class="
         relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
         rounded-full text-center text-gray-900 z-20">
       </span>
-      <!-- Work tab -->
       <button class="
         mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 
         transition-all
@@ -89,12 +89,12 @@
     </div>
     <!-- Todo container -->
     <div class="
-      h-96 p-6 mx-2 z-10 relative overflow-scroll
+      h-96 p-6 z-10 relative overflow-scroll sm:w-3/4 mx-auto
       from-blue-100 to-cyan-100 bg-gradient-to-b dark:from-cyan-900 dark:to-cyan-700 shadow-md 
       shadow-gray-400 dark:shadow-gray-900 rounded-lg" id="todoListContainer">
       <!-- Sort selector -->
       <select name="sort" id="sortSelector" class="p-2 text-sm bg-cyan-100 dark:bg-cyan-800 rounded-lg">
-        <option id="dateAddedSort" value="date-added">Date added</option>
+        <option id="timeAddedSort" value="timeAdded">Time added</option>
         <option id="nameSort" value="name">Name</option>
         <option id="deadlineSort" value="deadline">Deadline</option>
       </select>
@@ -104,13 +104,13 @@
     </div>
     <!-- Add todo input container -->
     <div class="
-      flex justify-center 
-      bg-cyan-100 dark:bg-cyan-700 p-2 m-2 
+      flex justify-center sm:w-3/4 mx-auto mt-2
+      bg-cyan-100 dark:bg-cyan-700 p-2
       shadow-lg shadow-gray-400 dark:shadow-gray-900 rounded-lg">
       <!-- Todo input -->
       <input class=" 
         mr-2 px-2 w-full rounded-lg 
-        bg-gray-300 hover:bg-gray-400
+        bg-gray-300 hover:bg-gray-400 focus-within:bg-gray-400
         dark:bg-zinc-700 hover:dark:bg-zinc-600 transition dark:text-slate-300
         border-none outline-none" type="text" id="todoInput">
       <!-- Add todo button -->
