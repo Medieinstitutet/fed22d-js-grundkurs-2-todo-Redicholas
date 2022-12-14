@@ -22,12 +22,12 @@ const todoListContainer = document.querySelector('#todoListContainer');
 const todoUl = document.querySelector('#todoUl');
 
 const time = new Date();
-const date: number = time.getDate();
-const month: number = time.getMonth() + 1;
-const year: number = time.getFullYear();
-const hour: number = time.getHours();
-const minute: number = time.getMinutes();
-const second: number = time.getSeconds();
+const date: Date = time.getDate() as unknown as Date;
+const month: Date = time.getMonth() + 1 as unknown as Date;
+const year: Date = time.getFullYear() as unknown as Date;
+const hour: Date = time.getHours() as unknown as Date;
+const minute: Date = time.getMinutes() as unknown as Date;
+const second: Date = time.getSeconds() as unknown as Date;
 
 let todoCategory: string;
 
@@ -73,11 +73,15 @@ function toggleDarkLight() :void {
 
 function getName() :void {
   const user = nameInput.value;
+  localStorage.setItem('Name', user);
+  if (user === '') {
+    hideLandingPage();
+  }
   if (nameDisplay != null) {
     nameDisplay.innerHTML = user;
   }
   if (landingPage != null) {
-    gsap.to(landingPage, { y: 1000, duration: 1, onComplete: hideLandingPage });
+    gsap.to(landingPage, { x: -500, duration: 0.5, onComplete: hideLandingPage });
   }
 }
 
@@ -134,16 +138,18 @@ function showTodos() :void {
           <li class="flex justify-between" id="todoLi-${item.index}">
             <input type="checkbox" class="checkboxes" id="checkbox-${item.index}">
             <input type="text" readonly id="todoText-${item.index}" value="${item.todoText}"
-            class="w-full ml-2 text-sm bg-inherit border-none outline-none">
+              class="w-full ml-2 text-sm bg-inherit border-none outline-none">
             </input>
             <button class="editBtn" id="editTodo-${item.index}">
-            <span id="${item.index}" class="editBtn material-symbols-outlined text-lg
-            dark:text-zinc-200 mr-2">edit
-            </span></button>
+              <span id="${item.index}" class="editBtn material-symbols-outlined text-lg
+              dark:text-zinc-200 mr-2">edit
+              </span>
+            </button>
             <button class="deleteBtn" id="delTodo-${item.index}">
-            <span class="material-symbols-outlined text-lg deleteBtn text-red-800">
-            delete
-            </span></button>
+              <span class="material-symbols-outlined text-lg deleteBtn text-red-700">
+              delete
+              </span>
+            </button>
           </li>
         `;
       }
@@ -158,7 +164,11 @@ function showTodos() :void {
 
 function getTime() {
   // TODO: Padstart second?
-  return `${year}/${month}/${date} ${hour}:${minute}:${second}`;
+  // second.padStart(2, '0');
+  return `
+  ${year as unknown as string}/${month as unknown as string}/${date as unknown as string}
+  ${hour as unknown as string}:${minute as unknown as string}:${second as unknown as string}
+  `;
 }
 
 function addTodo() :void {
@@ -250,7 +260,6 @@ function sortbyDateAdded() : void {
   showTodos();
 }
 
-// TODO: Animation
 function selectGeneralTab() :void {
   if (generalBtn?.classList.contains('selected')) {
     personalBtn?.classList.remove('selected');
@@ -315,7 +324,7 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
   showTodos();
 });
 
-// TODO: Move to named function?
+// TODO: Move to named function
 // TODO: Save completed state when switching tabs
 // Checkboxes complete todos
 todoUl?.addEventListener('change', (event: Event) => {
@@ -347,9 +356,12 @@ todoListContainer?.addEventListener('click', (event: MouseEvent | Event) => {
 
   if (target != null && target.matches('.deleteBtn')) {
     deleteTodo(mouseEvent);
-  } else if (event.target != null && target.matches('.editBtn')) {
+  } else if (target != null && target.matches('.editBtn')) {
     editTodo(mouseEvent);
   }
+  // else if (target != null && target.matches('.checkboxes')) {
+  //   console.log(mouseEvent); // TODO: Test
+  // }
 });
 
 generalBtn?.addEventListener('click', selectGeneralTab);
@@ -358,3 +370,4 @@ workBtn?.addEventListener('click', selectWorkTab);
 
 showTodos();
 showTodoCounter();
+getName();
