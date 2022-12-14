@@ -17,10 +17,12 @@ const personalAmount = document.querySelector('#personalAmount');
 const workAmount = document.querySelector('#workAmount');
 
 const todoInput = document.querySelector('#todoInput') as HTMLInputElement;
+const todoDeadlineInput = document.querySelector('#todoDeadlineInput') as HTMLInputElement;
 const todoInputSubmit = document.querySelector('#todoInputSubmit');
 const todoListContainer = document.querySelector('#todoListContainer');
 const todoUl = document.querySelector('#todoUl');
 
+// FIXME: Date only made once, not updated
 const time = new Date();
 const date: Date = time.getDate() as unknown as Date;
 const month: Date = time.getMonth() + 1 as unknown as Date;
@@ -42,7 +44,7 @@ class TodoItem {
 
   timeAdded: string;
 
-  deadline?: string; // TODO:
+  deadline: string;
 
   constructor(
     category: string,
@@ -50,7 +52,7 @@ class TodoItem {
     todoText: string,
     completed: boolean,
     timeAdded: string,
-    deadline?: string,
+    deadline: string,
   ) {
     this.category = category;
     this.index = index;
@@ -130,14 +132,19 @@ function showTodos() :void {
     todoListHtml = '<p class="text-center mt-8">Dont you have anything to do?! <br> Add something!</p>';
   } else {
     todoArray.forEach((item) => {
+      // eslint-disable-next-line no-param-reassign
+      item.deadline = item.deadline || '';
       if (item.category === todoCategory) {
         const completed = item.completed ? 'checked' : '';
         todoListHtml += `
           <li class="flex justify-between" id="todoLi-${item.index}">
             <input type="checkbox" ${completed} class="checkboxes" id="checkbox-${item.index}">
-            <input type="text" readonly id="todoText-${item.index}" value="${item.todoText}"
+            <input type="text" readonly id="todoText-${item.index}" 
+              title="Added: ${item.timeAdded}"
+              value="${item.todoText}"
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
+            <p title="Added: ${item.timeAdded}" class="mr-2 flex flex-col justify-center text-sm">${item.deadline}</p>
             <button class="editBtn" id="editTodo-${item.index}">
               <span id="${item.index}" 
               class="editBtn material-symbols-outlined text-lg
@@ -169,6 +176,7 @@ function getTime() {
 }
 
 function addTodo() :void {
+  const deadline = todoDeadlineInput.value;
   if (todoInput.value !== '') {
     const todoText = todoInput.value;
     if (generalBtn?.classList.contains('selected')) {
@@ -185,6 +193,7 @@ function addTodo() :void {
       todoText,
       false,
       getTime(),
+      deadline,
     );
 
     todoArray.push(newTodo);
@@ -211,7 +220,7 @@ function editTodo(event: MouseEvent) : void {
   const targetParent = target.parentElement as HTMLInputElement;
   const targetParentParent = targetParent.parentElement as HTMLInputElement;
   const todoText = targetParentParent.childNodes[3] as HTMLInputElement;
-  const editIcon = targetParentParent.childNodes[5].childNodes[1] as HTMLSpanElement;
+  const editIcon = targetParentParent.childNodes[7].childNodes[1] as HTMLSpanElement;
   const todoId = target.id as unknown as number;
   todoText.readOnly = !todoText.readOnly;
   todoText.focus();
@@ -249,6 +258,21 @@ function sortbyTimeAdded() : void {
     }
     if (a.timeAdded > b.timeAdded) {
       return -1;
+    }
+    return 0;
+  });
+  localStorage.setItem('Todos', JSON.stringify(sortedArray));
+  showTodos();
+}
+
+function sortbyDeadline() : void {
+  const sortedArray = [...todoArray];
+  sortedArray.sort((a, b) => {
+    if (a.deadline < b.deadline) {
+      return -1;
+    }
+    if (a.deadline > b.deadline) {
+      return 1;
     }
     return 0;
   });
@@ -303,6 +327,8 @@ sortSelector?.addEventListener('change', () => {
     sortbyName();
   } else if (sortSelector?.value === 'timeAdded') {
     sortbyTimeAdded();
+  } else if (sortSelector?.value === 'deadline') {
+    sortbyDeadline();
   }
 });
 
