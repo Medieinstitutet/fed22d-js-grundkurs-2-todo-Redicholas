@@ -17,7 +17,7 @@
 
 <body class="
     md:w-3/4 md:m-auto mx-2 lg:w-1/2 max-h-screen flex flex-col font-rubik
-    bg-gradient-to-tr from-zinc-100 to-rose-100 text-gray-800
+    bg-gradient-to-tr from-zinc-100 to-rose-50 text-gray-800
    dark:text-zinc-200 dark:from-zinc-800 dark:to-stone-900">
   <!-- Landing page -->
   <div class="
@@ -34,14 +34,14 @@
       bg-cyan-100 text-cyan-700 dark:bg-zinc-600 dark:text-cyan-400 dark:shadow-black
       shadow-gray-500 hover:bg-cyan-300" id="nameSubmit">Ok</button>
   </div>
-  <header>
-    <button class="absolute right-0 m-2" id="darkLightBtn"><span class="material-symbols-outlined">
-        dark_mode
-      </span></button>
-    <!-- Header -->
+  <button class="absolute right-0 m-2" id="darkLightBtn"><span class="material-symbols-outlined" id="darkLightIcon">
+      dark_mode
+    </span></button>
+  <!-- Header -->
+  <div class="wrapper h-screen flex justify-center flex-col">
     <div class="logo">
       <h1 class="
-        my-6 text-8xl text-center font-josefin 
+        my-2 text-8xl text-center font-josefin 
         font-thin dark:text-cyan-400 text-cyan-700">
         Doer</h1>
       <div class="text-center">
@@ -50,81 +50,82 @@
         <h2 class="dark:text-cyan-400 text-cyan-600">Get it Done</h2>
       </div>
     </div>
-  </header>
-  <main>
-    <div class="w-screen px-6 flex justify-around mt-8 sm:w-3/4 md:w-3/4 mx-auto" id="menu">
-      <!-- General tab -->
-      <span id="generalAmount" class="
-          relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
-          rounded-full text-center text-gray-900 z-20">
-      </span>
-      <button class="
+    </header>
+    <main>
+      <div class="w-screen px-6 flex justify-around mt-4 sm:w-3/4 md:w-3/4 mx-auto" id="menu">
+        <!-- General tab -->
+        <span id="generalAmount" class="
+        relative left-3 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
+        rounded-full text-center text-gray-900 z-20">
+        </span>
+        <button class="
         mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 
         transition-all selected
-        dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+        dark:hover:bg-cyan-300 dark:bg-cyan-900 dark:border-cyan-700
         bg-indigo-100 hover:bg-violet-300" id="generalButton">General</button>
-      <!-- Personal tab -->
-      <span id="personalAmount" class="
-        relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
+        <!-- Personal tab -->
+        <span id="personalAmount" class="
+        relative left-3 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
         rounded-full text-center text-gray-900 z-20">
-      </span>
-      <button class="
+        </span>
+        <button class="
         mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 
         transition-all
-        dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+        dark:hover:bg-cyan-300 dark:bg-cyan-900 dark:border-cyan-700
         bg-indigo-100 hover:bg-violet-300" id="personalButton">Personal</button>
-      <!-- Work tab -->
-      <span id="workAmount" class="
-        relative left-2 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
+        <!-- Work tab -->
+        <span id="workAmount" class="
+        relative left-3 top-2 bottom-2 h-6 w-6 bg-cyan-100 dark:bg-cyan-300
         rounded-full text-center text-gray-900 z-20">
-      </span>
-      <button class="
+        </span>
+        <button class="
         mx-px py-1 pb-2 w-28 rounded-lg relative top-3 z-0 
         transition-all
-        dark:hover:bg-amber-500 dark:hover:border-amber-300 dark:bg-cyan-900 dark:border-cyan-700
+        dark:hover:bg-cyan-300 dark:bg-cyan-900 dark:border-cyan-700
         bg-indigo-100 hover:bg-violet-300" id="workButton">Work</button>
-    </div>
-    <!-- Todo container -->
-    <div class="
+      </div>
+      <!-- Todo container -->
+      <div class="
       h-96 p-6 z-10 relative overflow-scroll sm:w-3/4 mx-auto
       from-blue-100 to-cyan-100 bg-gradient-to-b dark:from-cyan-900 dark:to-cyan-700 shadow-md 
       shadow-gray-400 dark:shadow-gray-900 rounded-lg" id="todoListContainer">
-      <!-- Sort selector -->
-      <div class="flex justify-between pr-14">
-        <select name="sort" id="sortSelector" class="p-2 text-sm bg-cyan-100 dark:bg-cyan-800 rounded-lg">
-          <option id="timeAddedSort" value="timeAdded">Time added</option>
-          <option id="nameSort" value="name">Name</option>
-          <option id="deadlineSort" value="deadline">Deadline</option>
-        </select>
-        <p class="relative top-4 text-sm">Deadline</p>
+        <!-- Sort selector -->
+        <div class="flex justify-between pr-14">
+          <select name="sort" id="sortSelector" class="p-2 text-sm bg-cyan-100 dark:bg-cyan-800 rounded-lg">
+            <option id="timeAddedSort" value="timeAdded">Time added</option>
+            <option id="nameSort" value="name">Name</option>
+            <option id="deadlineSort" value="deadline">Deadline</option>
+          </select>
+          <p class="relative top-4 text-sm">Deadline</p>
+        </div>
+        <ul id="todoUl">
+          <!-- Rendered in TS -->
+        </ul>
       </div>
-      <ul id="todoUl">
-        <!-- Rendered in TS -->
-      </ul>
-    </div>
-    <!-- Add todo input container -->
-    <div class="
+      <!-- Add todo input container -->
+      <div class="
       flex justify-center sm:w-3/4 mx-auto mt-2
       bg-cyan-100 dark:bg-cyan-700 p-2
       shadow-lg shadow-gray-400 dark:shadow-gray-900 rounded-lg">
-      <!-- Todo input -->
-      <input class=" 
+        <!-- Todo input -->
+        <input class=" 
         mr-2 px-2 w-full rounded-lg 
         bg-gray-300 hover:bg-gray-400 focus-within:bg-gray-400
         dark:bg-zinc-700 hover:dark:bg-zinc-600 transition dark:text-slate-300
         border-none outline-none" type="text" id="todoInput">
-      <span title="Deadline" class="material-symbols-outlined flex flex-col justify-center mr-1">
-        calendar_month
-      </span>
-      <!-- Deadline input -->
-      <input type="date" id="todoDeadlineInput" title="Deadline" class="px-1 py-1 mr-2 text-xs rounded-lg border-none outline-none
+        <span title="Deadline" class="material-symbols-outlined flex flex-col justify-center mr-1">
+          calendar_month
+        </span>
+        <!-- Deadline input -->
+        <input type="date" id="todoDeadlineInput" title="Deadline" class="px-1 py-1 mr-2 text-xs rounded-lg border-none outline-none
       bg-cyan-600 dark:bg-cyan-500 text-white">
-      <!-- Add todo button -->
-      <button
-        class="px-6 py-1 bg-cyan-600 hover:bg-violet-300 dark:bg-cyan-500 dark:hover:bg-amber-400 transition text-white rounded-lg"
-        id="todoInputSubmit">Add</button>
-    </div>
-  </main>
+        <!-- Add todo button -->
+        <button
+          class="px-6 py-1 bg-cyan-600 hover:bg-violet-300 dark:bg-cyan-500 dark:hover:bg-amber-400 transition text-white rounded-lg"
+          id="todoInputSubmit">Add</button>
+      </div>
+    </main>
+  </div>
   <button id="clearAll" class="absolute top-2 left-2">Clear</button>
   <script type="module" src="/src/main.ts"></script>
 </body>
