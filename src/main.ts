@@ -36,7 +36,9 @@ class TodoItem {
 
   timeAdded: string;
 
-  deadline: string;
+  deadlineDisplay: string;
+
+  deadlineDate: Date;
 
   constructor(
     category: string,
@@ -44,14 +46,16 @@ class TodoItem {
     todoText: string,
     completed: boolean,
     timeAdded: string,
-    deadline: string,
+    deadlineDisplay: string,
+    deadlineDate: Date,
   ) {
     this.category = category;
     this.index = index;
     this.todoText = todoText;
     this.completed = completed;
     this.timeAdded = timeAdded;
-    this.deadline = deadline;
+    this.deadlineDisplay = deadlineDisplay;
+    this.deadlineDate = deadlineDate;
   }
 }
 
@@ -130,9 +134,22 @@ function showTodos() :void {
   } else {
     todoArray.forEach((item) => {
       // eslint-disable-next-line no-param-reassign
-      item.deadline = item.deadline || '';
+      item.deadlineDisplay = item.deadlineDisplay || '';
       if (item.category === todoCategory) {
         const completed = item.completed ? 'checked' : '';
+        const currentTime = new Date() as unknown as number;
+        const deadline = new Date(item.deadlineDate) as unknown as number;
+        const diffTimeMilliSeconds = deadline - currentTime;
+        const diffDays = Math.ceil(diffTimeMilliSeconds / (1000 * 60 * 60 * 24));
+        let deadlineWarner = '';
+
+        if (diffDays < 5) {
+          deadlineWarner = 'text-amber-400';
+        }
+        if (diffDays < 0) {
+          deadlineWarner = 'text-red-800';
+        }
+
         todoListHtml += `
           <li class="flex justify-between" id="todoLi-${item.index}">
             <input type="checkbox" ${completed} class="checkboxes w-8 h-8" id="checkbox-${item.index}">
@@ -142,7 +159,9 @@ function showTodos() :void {
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
             <p title="Added: ${item.timeAdded}" 
-            class="mr-2 flex flex-col justify-center text-xs px-1">${item.deadline}</p>
+              class="mr-2 flex flex-col justify-center text-xs px-1 ${deadlineWarner}" 
+              id="deadlineText-${item.index}">${item.deadlineDisplay}
+            </p>
             <button class="editBtn" id="editTodo-${item.index}" title="Edit">
               <span id="${item.index}" 
               class="editBtn material-symbols-outlined text-lg
@@ -151,7 +170,7 @@ function showTodos() :void {
               </span>
             </button>
             <button class="deleteBtn w-8 h-8" id="delTodo-${item.index}" title="Delete">
-              <span class="material-symbols-outlined text-lg w-8 h-8 deleteBtn text-red-700">
+              <span class="material-symbols-outlined text-lg w-8 h-8 deleteBtn text-red-800">
               delete
               </span>
             </button>
@@ -181,8 +200,13 @@ function getTime() {
   `;
 }
 
+function deadlineToString(deadlineDate: Date) :string {
+  const deadline = deadlineDate.toDateString();
+  return deadline;
+}
+
 function addTodo() :void {
-  const deadline = todoDeadlineInput.value;
+  const deadline: Date | null = todoDeadlineInput.valueAsDate;
   if (todoInput.value !== '') {
     const todoText = todoInput.value;
     if (generalBtn?.classList.contains('selected')) {
@@ -199,7 +223,8 @@ function addTodo() :void {
       todoText,
       false,
       getTime(),
-      deadline,
+      deadlineToString(deadline as Date),
+      deadline as Date,
     );
 
     todoArray.push(newTodo);
@@ -274,10 +299,10 @@ function sortbyTimeAdded() : void {
 function sortbyDeadline() : void {
   const sortedArray = [...todoArray];
   sortedArray.sort((a, b) => {
-    if (a.deadline < b.deadline) {
+    if (a.deadlineDate < b.deadlineDate) {
       return -1;
     }
-    if (a.deadline > b.deadline) {
+    if (a.deadlineDate > b.deadlineDate) {
       return 1;
     }
     return 0;
