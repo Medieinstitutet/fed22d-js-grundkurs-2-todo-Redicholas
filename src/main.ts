@@ -142,7 +142,7 @@ function showTodos() :void {
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
             <p title="Added: ${item.timeAdded}" 
-            class="mr-2 flex flex-col justify-center text-sm px-1">${item.deadline}</p>
+            class="mr-2 flex flex-col justify-center text-xs px-1">${item.deadline}</p>
             <button class="editBtn" id="editTodo-${item.index}" title="Edit">
               <span id="${item.index}" 
               class="editBtn material-symbols-outlined text-lg
@@ -358,11 +358,8 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
   showTodos();
 });
 
-// TODO: Move to named function
-// Checkboxes complete todos
-todoUl?.addEventListener('change', (event: Event) => {
+function completeTodo(targetCheckbox: HTMLInputElement) {
   const retrieved = localStorage.getItem('Todos');
-  const targetCheckbox = event.target as HTMLInputElement;
   const targetLi = targetCheckbox.parentNode as HTMLInputElement;
   const index = targetCheckbox.id.replace('checkbox-', '');
   const numIndex = +index;
@@ -380,6 +377,12 @@ todoUl?.addEventListener('change', (event: Event) => {
   }
   console.table(todoArray);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
+}
+
+// Runs the completeTodo function when a checkbox is clicked
+todoUl?.addEventListener('change', (event: Event) => {
+  const targetCheckbox = event.target as HTMLInputElement;
+  completeTodo(targetCheckbox);
 });
 
 // Fetches the event and runs delete or edit function

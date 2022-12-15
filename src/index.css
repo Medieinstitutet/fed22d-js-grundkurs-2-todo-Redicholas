@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 .selected {
-  color: white;
-  background: #c4b5fd;
-  top: 5px;
+  top: 0;
 }
 
 .checked {
