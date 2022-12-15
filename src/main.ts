@@ -36,9 +36,7 @@ class TodoItem {
 
   timeAdded: string;
 
-  deadlineDisplay: string;
-
-  deadlineDate: Date;
+  deadline: string;
 
   constructor(
     category: string,
@@ -46,16 +44,14 @@ class TodoItem {
     todoText: string,
     completed: boolean,
     timeAdded: string,
-    deadlineDisplay: string,
-    deadlineDate: Date,
+    deadline: string,
   ) {
     this.category = category;
     this.index = index;
     this.todoText = todoText;
     this.completed = completed;
     this.timeAdded = timeAdded;
-    this.deadlineDisplay = deadlineDisplay;
-    this.deadlineDate = deadlineDate;
+    this.deadline = deadline;
   }
 }
 
@@ -134,12 +130,12 @@ function showTodos() :void {
   } else {
     todoArray.forEach((item) => {
       // eslint-disable-next-line no-param-reassign
-      item.deadlineDisplay = item.deadlineDisplay || '';
+      item.deadline = item.deadline || '';
       if (item.category === todoCategory) {
         const completed = item.completed ? 'checked' : '';
         const currentTime = new Date() as unknown as number;
-        const deadline = new Date(item.deadlineDate) as unknown as number;
-        const diffTimeMilliSeconds = deadline - currentTime;
+        const deadlineDate = new Date(item.deadline) as unknown as number;
+        const diffTimeMilliSeconds = deadlineDate - currentTime;
         const diffDays = Math.ceil(diffTimeMilliSeconds / (1000 * 60 * 60 * 24));
         let deadlineWarner = '';
 
@@ -160,7 +156,7 @@ function showTodos() :void {
             </input>
             <p title="Added: ${item.timeAdded}" 
               class="mr-2 flex flex-col justify-center text-xs px-1 ${deadlineWarner}" 
-              id="deadlineText-${item.index}">${item.deadlineDisplay}
+              id="deadlineText-${item.index}">${item.deadline}
             </p>
             <button class="editBtn" id="editTodo-${item.index}" title="Edit">
               <span id="${item.index}" 
@@ -200,13 +196,8 @@ function getTime() {
   `;
 }
 
-function deadlineToString(deadlineDate: Date) :string {
-  const deadline = deadlineDate.toDateString();
-  return deadline;
-}
-
 function addTodo() :void {
-  const deadline: Date | null = todoDeadlineInput.valueAsDate;
+  const deadline = todoDeadlineInput.value;
   if (todoInput.value !== '') {
     const todoText = todoInput.value;
     if (generalBtn?.classList.contains('selected')) {
@@ -223,8 +214,7 @@ function addTodo() :void {
       todoText,
       false,
       getTime(),
-      deadlineToString(deadline as Date),
-      deadline as Date,
+      deadline,
     );
 
     todoArray.push(newTodo);
@@ -299,10 +289,10 @@ function sortbyTimeAdded() : void {
 function sortbyDeadline() : void {
   const sortedArray = [...todoArray];
   sortedArray.sort((a, b) => {
-    if (a.deadlineDate < b.deadlineDate) {
+    if (a.deadline < b.deadline) {
       return -1;
     }
-    if (a.deadlineDate > b.deadlineDate) {
+    if (a.deadline > b.deadline) {
       return 1;
     }
     return 0;
