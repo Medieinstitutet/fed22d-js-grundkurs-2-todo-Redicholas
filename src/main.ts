@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 
 const landingPage = document.querySelector('#landingPage');
 const darkLightBtn = document.querySelector('#darkLightBtn');
+const darkLightIcon = document.querySelector('#darkLightIcon') as HTMLSpanElement;
 const nameDisplay = document.querySelector('#user');
 const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
 const nameSubmit = document.querySelector('#nameSubmit');
@@ -62,6 +63,11 @@ function hideLandingPage() :void {
 
 function toggleDarkLight() :void {
   document.documentElement.classList.toggle('dark');
+  if (document.documentElement.classList.contains('dark')) {
+    darkLightIcon.innerHTML = 'light_mode';
+  } else {
+    darkLightIcon.innerHTML = 'dark_mode';
+  }
 }
 
 function getName() :void {
@@ -129,13 +135,14 @@ function showTodos() :void {
         const completed = item.completed ? 'checked' : '';
         todoListHtml += `
           <li class="flex justify-between" id="todoLi-${item.index}">
-            <input type="checkbox" ${completed} class="checkboxes" id="checkbox-${item.index}">
+            <input type="checkbox" ${completed} class="checkboxes w-8 h-8" id="checkbox-${item.index}">
             <input type="text" readonly id="todoText-${item.index}" 
               title="Added: ${item.timeAdded}"
               value="${item.todoText}"
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
-            <p title="Added: ${item.timeAdded}" class="mr-2 flex flex-col justify-center text-sm">${item.deadline}</p>
+            <p title="Added: ${item.timeAdded}" 
+            class="mr-2 flex flex-col justify-center text-sm px-1">${item.deadline}</p>
             <button class="editBtn" id="editTodo-${item.index}" title="Edit">
               <span id="${item.index}" 
               class="editBtn material-symbols-outlined text-lg
@@ -143,8 +150,8 @@ function showTodos() :void {
               edit
               </span>
             </button>
-            <button class="deleteBtn" id="delTodo-${item.index}" title="Delete">
-              <span class="material-symbols-outlined text-lg deleteBtn text-red-700">
+            <button class="deleteBtn w-8 h-8" id="delTodo-${item.index}" title="Delete">
+              <span class="material-symbols-outlined text-lg w-8 h-8 deleteBtn text-red-700">
               delete
               </span>
             </button>
@@ -320,6 +327,12 @@ nameSubmit?.addEventListener('click', getName);
 todoInputSubmit?.addEventListener('click', addTodo);
 
 darkLightBtn?.addEventListener('click', toggleDarkLight);
+
+if (document.documentElement.classList.contains('dark')) {
+  darkLightIcon.innerHTML = 'light_mode';
+} else {
+  darkLightIcon.innerHTML = 'dark_mode';
+}
 
 sortSelector?.addEventListener('change', () => {
   if (sortSelector?.value === 'name') {
