@@ -140,7 +140,7 @@ function showTodos() :void {
         let deadlineWarner = '';
 
         if (diffDays < 5) {
-          deadlineWarner = 'text-amber-400';
+          deadlineWarner = 'text-yellow-600';
         }
         if (diffDays < 0) {
           deadlineWarner = 'text-red-800';
@@ -154,19 +154,19 @@ function showTodos() :void {
               value="${item.todoText}"
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
-            <p title="Added: ${item.timeAdded}" 
+            <p title="Days to deadline: ${diffDays}" 
               class="mr-2 flex flex-col justify-center text-xs px-1 ${deadlineWarner}" 
               id="deadlineText-${item.index}">${item.deadline}
             </p>
             <button class="editBtn" id="editTodo-${item.index}" title="Edit">
               <span id="${item.index}" 
               class="editBtn material-symbols-outlined text-lg
-              dark:text-zinc-200 mr-2">
+              dark:text-zinc-300">
               edit
               </span>
             </button>
             <button class="deleteBtn w-8 h-8" id="delTodo-${item.index}" title="Delete">
-              <span class="material-symbols-outlined text-lg w-8 h-8 deleteBtn text-red-800">
+              <span class="material-symbols-outlined text-lg w-8 h-8 deleteBtn text-red-900">
               delete
               </span>
             </button>
@@ -252,6 +252,38 @@ function editTodo(event: MouseEvent) : void {
   }
   todoArray[todoId].todoText = todoText.value;
   localStorage.setItem('Todos', JSON.stringify(todoArray));
+}
+
+function completeTodo(targetCheckbox: HTMLInputElement) {
+  const retrieved = localStorage.getItem('Todos');
+  const targetLi = targetCheckbox.parentNode as HTMLInputElement;
+  const index = targetCheckbox.id.replace('checkbox-', '');
+  const numIndex = +index;
+  const todoTextLi = document.querySelector(`#${targetLi.id}`) as HTMLElement;
+  const todoTextEl = todoTextLi.childNodes[3] as HTMLElement;
+  if (retrieved != null) {
+    todoArray = JSON.parse(retrieved) as TodoItem[];
+  }
+  if (todoArray[numIndex].completed) {
+    todoArray[numIndex].completed = false;
+    todoTextEl?.classList.toggle('checked');
+  } else {
+    todoArray[numIndex].completed = true;
+    todoTextEl?.classList.toggle('checked');
+  }
+
+  const sortedArray = [...todoArray];
+  sortedArray.sort((a, b) => {
+    if (a.completed < b.completed) {
+      return -1;
+    }
+    if (a.completed > b.completed) {
+      return 1;
+    }
+    return 0;
+  });
+  localStorage.setItem('Todos', JSON.stringify(sortedArray));
+  showTodos();
 }
 
 function sortbyName() : void {
@@ -372,27 +404,6 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
   todoArray = [];
   showTodos();
 });
-
-function completeTodo(targetCheckbox: HTMLInputElement) {
-  const retrieved = localStorage.getItem('Todos');
-  const targetLi = targetCheckbox.parentNode as HTMLInputElement;
-  const index = targetCheckbox.id.replace('checkbox-', '');
-  const numIndex = +index;
-  const todoTextLi = document.querySelector(`#${targetLi.id}`) as HTMLElement;
-  const todoTextEl = todoTextLi.childNodes[3] as HTMLElement;
-  if (retrieved != null) {
-    todoArray = JSON.parse(retrieved) as TodoItem[];
-  }
-  if (todoArray[numIndex].completed) {
-    todoArray[numIndex].completed = false;
-    todoTextEl?.classList.toggle('checked');
-  } else {
-    todoArray[numIndex].completed = true;
-    todoTextEl?.classList.toggle('checked');
-  }
-  console.table(todoArray);
-  localStorage.setItem('Todos', JSON.stringify(todoArray));
-}
 
 // Runs the completeTodo function when a checkbox is clicked
 todoUl?.addEventListener('change', (event: Event) => {
