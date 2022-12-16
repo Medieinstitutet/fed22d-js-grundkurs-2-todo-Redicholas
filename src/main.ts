@@ -24,6 +24,7 @@ const todoListContainer = document.querySelector('#todoListContainer');
 const todoUl = document.querySelector('#todoUl');
 
 let todoCategory: string;
+let user: string;
 
 class TodoItem {
   category: string;
@@ -57,10 +58,6 @@ class TodoItem {
 
 let todoArray: TodoItem[] = [];
 
-function hideLandingPage() :void {
-  landingPage?.classList.add('visually-hidden');
-}
-
 function toggleDarkLight() :void {
   document.documentElement.classList.toggle('dark');
   if (document.documentElement.classList.contains('dark')) {
@@ -70,18 +67,8 @@ function toggleDarkLight() :void {
   }
 }
 
-function getName() :void {
-  const user = nameInput.value;
-  localStorage.setItem('Name', user);
-  if (user === '') {
-    hideLandingPage();
-  }
-  if (nameDisplay != null) {
-    nameDisplay.innerHTML = user;
-  }
-  if (landingPage != null) {
-    gsap.to(landingPage, { x: -500, duration: 0.5, onComplete: hideLandingPage });
-  }
+function hideLandingPage() :void {
+  landingPage?.classList.add('visually-hidden');
 }
 
 function showTodoCounter() :void {
@@ -145,9 +132,8 @@ function showTodos() :void {
         if (diffDays < 0) {
           deadlineWarner = 'text-red-800';
         }
-
         todoListHtml += `
-          <li class="flex justify-between" id="todoLi-${item.index}">
+          <li class="flex justify-between list-items" id="todoLi-${item.index}">
             <input type="checkbox" ${completed} class="checkboxes w-8 h-8" id="checkbox-${item.index}">
             <input type="text" readonly id="todoText-${item.index}" 
               title="Added: ${item.timeAdded}"
@@ -171,7 +157,7 @@ function showTodos() :void {
               </span>
             </button>
           </li>
-        `;
+          `;
       }
     });
   }
@@ -179,6 +165,28 @@ function showTodos() :void {
     todoUl.innerHTML = todoListHtml;
   }
   showTodoCounter();
+  gsap.from('.list-items', { y: 300, duration: 0.2, stagger: 0.08 });
+}
+
+function getName() :void {
+  if (user !== '' && user != null) {
+    gsap.to(landingPage, { opacity: 0, duration: 1.5, onComplete: hideLandingPage });
+  }
+  nameInput.value = '';
+  nameInput.focus();
+  showTodos();
+}
+
+function lookForName() :void {
+  if (user === '' || user == null) {
+    user = localStorage.getItem('Name') as string;
+    user = nameInput.value;
+    getName();
+  }
+  localStorage.setItem('Name', user);
+  if (nameDisplay != null) {
+    nameDisplay.innerHTML = user;
+  }
 }
 
 function getTime() {
@@ -369,7 +377,7 @@ function selectWorkTab() :void {
   showTodos();
 }
 
-nameSubmit?.addEventListener('click', getName);
+nameSubmit?.addEventListener('click', lookForName);
 
 todoInputSubmit?.addEventListener('click', addTodo);
 
@@ -430,6 +438,6 @@ generalBtn?.addEventListener('click', selectGeneralTab);
 personalBtn?.addEventListener('click', selectPersonalTab);
 workBtn?.addEventListener('click', selectWorkTab);
 
+lookForName();
 showTodos();
 showTodoCounter();
-getName();
