@@ -97,6 +97,8 @@ function showTodoCounter() :void {
 
 function showTodos() :void {
   const retrieved = localStorage.getItem('Todos') as string;
+  let todoListHtml = '';
+
   if (retrieved != null) {
     todoArray = JSON.parse(retrieved) as TodoItem[];
   }
@@ -104,14 +106,17 @@ function showTodos() :void {
     // eslint-disable-next-line no-param-reassign
     item.index = i;
   });
-  if (generalBtn?.classList.contains('selected')) {
-    todoCategory = 'general';
-  } else if (personalBtn?.classList.contains('selected')) {
-    todoCategory = 'personal';
-  } else {
-    todoCategory = 'work';
+  switch (true) {
+    case generalBtn?.classList.contains('selected'):
+      todoCategory = 'general';
+      break;
+    case personalBtn?.classList.contains('selected'):
+      todoCategory = 'personal';
+      break;
+    default:
+      todoCategory = 'work';
+      break;
   }
-  let todoListHtml = '';
   if (todoArray.length === 0) {
     todoListHtml = '<p class="text-center mt-8">Dont you have anything to do?! <br> Add something!</p>';
   } else {
@@ -172,7 +177,7 @@ function getName() :void {
   if (user !== '' && user != null) {
     gsap.to(landingPage, { opacity: 0, duration: 1.5, onComplete: hideLandingPage });
   }
-  nameInput.value = '';
+  nameInput.value = localStorage.getItem('Name') as string;
   nameInput.focus();
   showTodos();
 }
@@ -206,6 +211,7 @@ function getTime() {
 
 function addTodo() :void {
   const deadline = todoDeadlineInput.value;
+
   if (todoInput.value !== '') {
     const todoText = todoInput.value;
     switch (true) {
@@ -242,6 +248,7 @@ function deleteTodo(event: MouseEvent) {
   const targetParent = target.parentElement as HTMLInputElement;
   const todoItem = document.querySelector(`#${targetParent.id}`) as HTMLInputElement;
   const itemId = parseInt(todoItem?.id.replace('delTodo-', ''), 10);
+
   todoArray.splice(itemId, 1);
   localStorage.setItem('Todos', JSON.stringify(todoArray));
   showTodos();
@@ -254,6 +261,7 @@ function editTodo(event: MouseEvent) : void {
   const todoText = targetParentParent.childNodes[3] as HTMLInputElement;
   const editIcon = targetParentParent.childNodes[7].childNodes[1] as HTMLSpanElement;
   const todoId = target.id as unknown as number;
+
   todoText.readOnly = !todoText.readOnly;
   todoText.focus();
   if (!todoText.readOnly) {
@@ -272,6 +280,7 @@ function completeTodo(targetCheckbox: HTMLInputElement) {
   const numIndex = +index;
   const todoTextLi = document.querySelector(`#${targetLi.id}`) as HTMLElement;
   const todoTextEl = todoTextLi.childNodes[3] as HTMLElement;
+
   if (retrieved != null) {
     todoArray = JSON.parse(retrieved) as TodoItem[];
   }
@@ -331,6 +340,7 @@ function sortbyTimeAdded() : void {
 
 function sortbyDeadline() : void {
   const sortedArray = [...todoArray];
+
   sortedArray.sort((a, b) => {
     if (a.deadline < b.deadline) {
       return -1;
@@ -380,12 +390,6 @@ function selectWorkTab() :void {
   showTodos();
 }
 
-nameSubmit?.addEventListener('click', lookForName);
-
-todoInputSubmit?.addEventListener('click', addTodo);
-
-darkLightBtn?.addEventListener('click', toggleDarkLight);
-
 if (document.documentElement.classList.contains('dark')) {
   darkLightIcon.innerHTML = 'light_mode';
 } else {
@@ -414,6 +418,13 @@ todoInput?.addEventListener('keyup', (event) => {
   }
 });
 
+// Enter key sumbits name on landing page
+nameInput?.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    lookForName();
+  }
+});
+
 // Clear all todos, delete before publish.
 document.querySelector('#clearAll')?.addEventListener('click', () => {
   localStorage.clear();
@@ -424,6 +435,7 @@ document.querySelector('#clearAll')?.addEventListener('click', () => {
 // Runs the completeTodo function when a checkbox is clicked
 todoUl?.addEventListener('change', (event: Event) => {
   const targetCheckbox = event.target as HTMLInputElement;
+
   completeTodo(targetCheckbox);
 });
 
@@ -437,11 +449,11 @@ todoListContainer?.addEventListener('click', (event: MouseEvent | Event) => {
   } else if (target != null && target.matches('.editBtn')) {
     editTodo(mouseEvent);
   }
-  // else if (target != null && target.matches('.checkboxes')) {
-  //   console.log(mouseEvent); // TODO: Test
-  // }
 });
 
+nameSubmit?.addEventListener('click', lookForName);
+todoInputSubmit?.addEventListener('click', addTodo);
+darkLightBtn?.addEventListener('click', toggleDarkLight);
 generalBtn?.addEventListener('click', selectGeneralTab);
 personalBtn?.addEventListener('click', selectPersonalTab);
 workBtn?.addEventListener('click', selectWorkTab);
