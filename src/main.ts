@@ -254,6 +254,7 @@ function deleteTodo(event: MouseEvent) {
   showTodos();
 }
 
+// FIXME: Keyboard event edit
 function editTodo(event: MouseEvent) : void {
   const target = event.target as HTMLInputElement;
   const targetParent = target.parentElement as HTMLInputElement;
@@ -443,7 +444,7 @@ todoUl?.addEventListener('change', (event: Event) => {
 todoListContainer?.addEventListener('click', (event: MouseEvent | Event) => {
   const mouseEvent = event as MouseEvent;
   const target = mouseEvent.target as HTMLElement;
-
+  // FIXME: keyboard event for edit
   if (target != null && target.matches('.deleteBtn')) {
     deleteTodo(mouseEvent);
   } else if (target != null && target.matches('.editBtn')) {
