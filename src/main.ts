@@ -208,12 +208,15 @@ function addTodo() :void {
   const deadline = todoDeadlineInput.value;
   if (todoInput.value !== '') {
     const todoText = todoInput.value;
-    if (generalBtn?.classList.contains('selected')) {
-      todoCategory = 'general';
-    } else if (personalBtn?.classList.contains('selected')) {
-      todoCategory = 'personal';
-    } else {
-      todoCategory = 'work';
+    switch (true) {
+      case generalBtn?.classList.contains('selected'):
+        todoCategory = 'general';
+        break;
+      case personalBtn?.classList.contains('selected'):
+        todoCategory = 'personal';
+        break;
+      default:
+        todoCategory = 'work';
     }
 
     const newTodo = new TodoItem(
@@ -390,12 +393,17 @@ if (document.documentElement.classList.contains('dark')) {
 }
 
 sortSelector?.addEventListener('change', () => {
-  if (sortSelector?.value === 'name') {
-    sortbyName();
-  } else if (sortSelector?.value === 'timeAdded') {
-    sortbyTimeAdded();
-  } else if (sortSelector?.value === 'deadline') {
-    sortbyDeadline();
+  switch (true) {
+    case sortSelector?.value === 'name':
+      sortbyName();
+      break;
+    case sortSelector?.value === 'timeAdded':
+      sortbyTimeAdded();
+      break;
+    case sortSelector?.value === 'deadline':
+      sortbyDeadline();
+      break;
+    default: sortbyTimeAdded();
   }
 });
 
