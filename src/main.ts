@@ -173,6 +173,7 @@ function showTodos() :void {
   gsap.from('.list-items', { y: 300, duration: 0.2, stagger: 0.08 });
 }
 
+// FIXME: Kan inte dölja landing page när user redan finns i localstorage
 function getName() :void {
   if (user !== '' && user != null) {
     gsap.to(landingPage, { opacity: 0, duration: 1.5, onComplete: hideLandingPage });
