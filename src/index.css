@@ -19,3 +19,22 @@
   white-space: nowrap;
   width: 1px;
 }
+
+.landing-page,
+body {
+  background-image: url('/public/poly-grid.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+button.tab {
+  @apply flex justify-center
+  mx-px py-1 pb-2 w-28 rounded-t-lg relative z-0 
+  transition-all
+  bg-cyan-900 hover:bg-cyan-300 hover:text-gray-900;
+}
+
+span.counter {
+  @apply bg-cyan-300 inline-block w-6
+  rounded-full text-center text-gray-900 z-20 relative bottom-3;
+}

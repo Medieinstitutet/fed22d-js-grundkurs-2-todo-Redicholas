@@ -2,8 +2,6 @@ import './index.css';
 import { gsap } from 'gsap';
 
 const landingPage = document.querySelector('#landingPage');
-const darkLightBtn = document.querySelector('#darkLightBtn');
-const darkLightIcon = document.querySelector('#darkLightIcon') as HTMLSpanElement;
 const nameDisplay = document.querySelector('#user');
 const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
 const nameSubmit = document.querySelector('#nameSubmit');
@@ -58,20 +56,11 @@ class TodoItem {
 
 let todoArray: TodoItem[] = [];
 
-function toggleDarkLight() :void {
-  document.documentElement.classList.toggle('dark');
-  if (document.documentElement.classList.contains('dark')) {
-    darkLightIcon.innerHTML = 'light_mode';
-  } else {
-    darkLightIcon.innerHTML = 'dark_mode';
-  }
-}
-
-function hideLandingPage() :void {
+function hideLandingPage(): void {
   landingPage?.classList.add('visually-hidden');
 }
 
-function showTodoCounter() :void {
+function showTodoCounter(): void {
   let generalCounter = 0;
   let personalCounter = 0;
   let workCounter = 0;
@@ -95,7 +84,7 @@ function showTodoCounter() :void {
   }
 }
 
-function showTodos() :void {
+function showTodos(): void {
   const retrieved = localStorage.getItem('Todos') as string;
   let todoListHtml = '';
 
@@ -174,16 +163,16 @@ function showTodos() :void {
 }
 
 // FIXME: Kan inte dölja landing page när user redan finns i localstorage
-function getName() :void {
+function getName(): void {
   if (user !== '' && user != null) {
-    gsap.to(landingPage, { opacity: 0, duration: 1.5, onComplete: hideLandingPage });
+    gsap.to(landingPage, { opacity: 0, duration: 1, onComplete: hideLandingPage });
   }
   nameInput.value = localStorage.getItem('Name') as string;
   nameInput.focus();
   showTodos();
 }
 
-function lookForName() :void {
+function lookForName(): void {
   if (user === '' || user == null) {
     user = localStorage.getItem('Name') as string;
     user = nameInput.value;
@@ -210,7 +199,7 @@ function getTime() {
   `;
 }
 
-function addTodo() :void {
+function addTodo(): void {
   const deadline = todoDeadlineInput.value;
 
   if (todoInput.value !== '') {
@@ -256,7 +245,7 @@ function deleteTodo(event: MouseEvent) {
 }
 
 // FIXME: Keyboard event edit
-function editTodo(event: MouseEvent) : void {
+function editTodo(event: MouseEvent): void {
   const target = event.target as HTMLInputElement;
   const targetParent = target.parentElement as HTMLInputElement;
   const targetParentParent = targetParent.parentElement as HTMLInputElement;
@@ -308,7 +297,7 @@ function completeTodo(targetCheckbox: HTMLInputElement) {
   showTodos();
 }
 
-function sortbyName() : void {
+function sortbyName(): void {
   const sortedArray = [...todoArray];
 
   sortedArray.sort((a, b) => {
@@ -324,7 +313,7 @@ function sortbyName() : void {
   showTodos();
 }
 
-function sortbyTimeAdded() : void {
+function sortbyTimeAdded(): void {
   const sortedArray = [...todoArray];
 
   sortedArray.sort((a, b) => {
@@ -340,7 +329,7 @@ function sortbyTimeAdded() : void {
   showTodos();
 }
 
-function sortbyDeadline() : void {
+function sortbyDeadline(): void {
   const sortedArray = [...todoArray];
 
   sortedArray.sort((a, b) => {
@@ -356,7 +345,7 @@ function sortbyDeadline() : void {
   showTodos();
 }
 
-function selectGeneralTab() :void {
+function selectGeneralTab(): void {
   if (generalBtn?.classList.contains('selected')) {
     personalBtn?.classList.remove('selected');
     workBtn?.classList.remove('selected');
@@ -368,7 +357,7 @@ function selectGeneralTab() :void {
   showTodos();
 }
 
-function selectPersonalTab() :void {
+function selectPersonalTab(): void {
   if (personalBtn?.classList.contains('selected')) {
     generalBtn?.classList.remove('selected');
     workBtn?.classList.remove('selected');
@@ -380,7 +369,7 @@ function selectPersonalTab() :void {
   showTodos();
 }
 
-function selectWorkTab() :void {
+function selectWorkTab(): void {
   if (workBtn?.classList.contains('selected')) {
     personalBtn?.classList.remove('selected');
     generalBtn?.classList.remove('selected');
@@ -390,12 +379,6 @@ function selectWorkTab() :void {
     generalBtn?.classList.remove('selected');
   }
   showTodos();
-}
-
-if (document.documentElement.classList.contains('dark')) {
-  darkLightIcon.innerHTML = 'light_mode';
-} else {
-  darkLightIcon.innerHTML = 'dark_mode';
 }
 
 sortSelector?.addEventListener('change', () => {
@@ -455,7 +438,6 @@ todoListContainer?.addEventListener('click', (event: MouseEvent | Event) => {
 
 nameSubmit?.addEventListener('click', lookForName);
 todoInputSubmit?.addEventListener('click', addTodo);
-darkLightBtn?.addEventListener('click', toggleDarkLight);
 generalBtn?.addEventListener('click', selectGeneralTab);
 personalBtn?.addEventListener('click', selectPersonalTab);
 workBtn?.addEventListener('click', selectWorkTab);

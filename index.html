@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="h-screen dark">
+<html lang="en" class="h-screen">
 
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/ico" href="/brain.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/ico" href="/brain.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100&family=Rubik:wght@300&display=swap"
@@ -16,84 +16,59 @@
 </head>
 
 <body class="
-  m-auto max-h-screen flex flex-col font-rubik
-  bg-gradient-to-t from-stone-300 to-stone-100 text-gray-800
-  dark:text-zinc-200 dark:from-zinc-800 dark:to-stone-900">
+  m-auto max-h-screen flex flex-col font-rubik 
+  text-zinc-200">
   <!-- Landing page -->
   <div class="
     landing-page absolute w-screen h-screen flex flex-col justify-center items-center
     bg-gradient-to-b z-30
-  dark:from-zinc-900 dark:to-stone-800 dark:text-cyan-400
-  bg-gray-400 text-cyan-700" id="landingPage">
+  from-zinc-900 to-stone-800 text-cyan-400" id="landingPage">
     <h1 class="text-5xl text-center mb-20 font-josefin">Welcome to<br>Doer</h1>
     <h2>Enter Your Name:</h2>
     <input class="
-      text-cyan-700 rounded-sm shadow-md shadow-gray-500 p-1 hover:bg-cyan-50 dark:hover:bg-zinc-500
-      dark:bg-zinc-600 dark:text-cyan-400 dark:shadow-black border-none outline-none" type="text" id="nameInput">
+      rounded-sm shadow-md p-1 w-36 hover:bg-zinc-500
+      bg-zinc-600 text-cyan-400 shadow-black border-none outline-none text-center" type="text" id="nameInput">
     <button class="
-      border-2 border-cyan-500 mt-4 py-2 px-12 rounded-md shadow-md
-      bg-cyan-100 text-cyan-700 dark:bg-zinc-600 dark:text-cyan-400 dark:shadow-black
-      shadow-gray-500 hover:bg-cyan-300 dark:hover:bg-zinc-500" id="nameSubmit">Ok</button>
+      mt-4 py-2 px-12 rounded-md shadow-md
+      bg-zinc-600 text-cyan-400 shadow-black
+      hover:bg-zinc-500" id="nameSubmit">Ok</button>
   </div>
-  <button class="absolute right-0 m-2" id="darkLightBtn">
-    <span class="material-symbols-outlined" id="darkLightIcon">
-      dark_mode
-    </span></button>
   <!-- Header -->
   <div class="wrapper h-screen flex justify-center flex-col mx-4 lg:m-auto lg:w-2/3">
-    <div class="logo">
+    <header>
       <h1 class="
         my-2 text-8xl text-center font-josefin 
-        font-thin dark:text-cyan-400 text-cyan-600">
+        font-thin text-cyan-400">
         Doer</h1>
+      <!-- Header welcome text -->
       <div class="text-center">
-        <!-- Header welcome text -->
         <span class="text-2xl">Welcome <span id="user"></span></span>
-        <h2 class="dark:text-cyan-400 text-cyan-600">Get it Done</h2>
+        <h2 class="text-cyan-400">Get it Done</h2>
       </div>
-    </div>
     </header>
     <main>
       <div class="w-screen px-6 flex justify-around mt-4 sm:w-3/4 md:w-3/4 mx-auto" id="menu">
         <!-- General tab -->
-        <button class="flex justify-center
-          mx-px py-1 pb-2 w-28 rounded-t-lg relative top-2 right-2 z-0 
-          transition-all selected
-          dark:bg-cyan-900 dark:hover:bg-cyan-300 dark:hover:text-gray-900
-          hover:bg-cyan-300 bg-stone-300" id="generalButton">
-          <span id="generalAmount" class="
-            bg-cyan-100 dark:bg-cyan-300 mr-2 inline-block w-6
-            rounded-full text-center text-gray-900 z-20 relative bottom-3">
+        <button class="tab top-2 right-2 selected" id="generalButton">
+          <span id="generalAmount" class="mr-2 counter">
           </span>General</button>
         <!-- Personal tab -->
-        <button class="flex justify-center
-          mx-px py-1 pb-2 w-28 rounded-t-lg relative top-2 right-2 z-0 
-          transition-all
-          dark:bg-cyan-900 dark:hover:bg-cyan-300 dark:hover:text-gray-900
-          hover:bg-cyan-300 bg-stone-300" id="personalButton">
-          <span id="personalAmount" class="
-            bg-cyan-100 dark:bg-cyan-300 mr-2 inline-block w-6
-            rounded-full text-center text-gray-900 z-20 relative bottom-3">
+        <button class="top-2 right-2 tab" id="personalButton">
+          <span id="personalAmount" class="mr-2 counter">
           </span>Personal</button>
         <!-- Work tab -->
-        <button class="flex justify-center
-          mx-px py-1 pb-2 w-28 rounded-t-lg relative top-2 right-2 z-0 
-          transition-all
-          dark:bg-cyan-900 dark:hover:bg-cyan-300 dark:hover:text-gray-900
-          hover:bg-cyan-300 bg-stone-300" id="workButton">
-          <span id="workAmount" class="
-            bg-cyan-100 dark:bg-cyan-300 mr-6 inline-block w-6
-            rounded-full text-center text-gray-900 z-20 relative bottom-3">
+        <button class="top-2 right-2 tab" id="workButton">
+          <span id="workAmount" class="counter mr-6 counter">
           </span>Work</button>
       </div>
       <!-- Todo container -->
       <div class="
         h-96 p-6 z-10 relative overflow-scroll sm:w-3/4 mx-auto
-        from-stone-300 to-stone-100 bg-gradient-to-b dark:from-cyan-900 dark:to-cyan-700 shadow-md 
-        shadow-gray-400 dark:shadow-gray-900 rounded-lg" id="todoListContainer">
+        bg-gradient-to-b from-cyan-900 to-cyan-700 shadow-md 
+        shadow-gray-900 rounded-lg" id="todoListContainer">
         <!-- Sort selector -->
         <div class="flex justify-between pr-14 mb-4">
-          <select name="sort" id="sortSelector" class="p-2 text-sm bg-stone-100 dark:bg-cyan-800 rounded-lg">
+          <select name="sort" id="sortSelector" class="p-2 text-sm bg-cyan-800 rounded-lg">
             <option>Sort by:</option>
             <option id="timeAddedSort" value="timeAdded">Time added</option>
             <option id="nameSort" value="name">Name</option>
@@ -108,29 +83,28 @@
       <!-- Add todo input container -->
       <div class="
         flex justify-center sm:w-3/4 mx-auto mt-2
-        bg-stone-100 dark:bg-cyan-700 p-2
-        shadow-lg shadow-gray-400 dark:shadow-gray-900 rounded-lg">
+        bg-cyan-700 p-2
+        shadow-lg shadow-gray-900 rounded-lg">
         <!-- Todo input -->
         <input class=" 
           mr-2 px-2 w-full rounded-lg 
-          bg-gray-300 hover:bg-gray-400 focus-within:bg-gray-400
-          dark:bg-zinc-700 hover:dark:bg-zinc-600 transition dark:text-slate-300
+          bg-zinc-700 hover:bg-zinc-600 transition text-slate-300
           border-none outline-none" type="text" id="todoInput">
-        <span class="material-symbols-outlined flex flex-col justify-center mr-1">
-          calendar_month
-        </span>
-        <!-- Deadline input -->
-        <input type="date" id="todoDeadlineInput" title="Deadline" class="px-1 py-1 mr-2 text-xs rounded-lg border-none outline-none
-        bg-cyan-600 dark:bg-cyan-500 text-white">
+        <label class="flex">
+          <span class="material-symbols-outlined flex flex-col justify-center mr-1 cursor-pointer" title="Deadline">
+            calendar_month
+          </span>
+          <input type="date" id="todoDeadlineInput" title="Deadline" class="px-1 py-1 mr-2 text-xs rounded-lg border-none outline-none cursor-pointer
+          bg-cyan-500 text-white">
+        </label>
         <!-- Add todo button -->
-        <button
-          class="px-6 py-1 bg-cyan-600 hover:bg-cyan-300 dark:hover:bg-cyan-300 dark:bg-cyan-500 transition text-white rounded-lg"
+        <button class="px-6 py-1 hover:bg-cyan-300 bg-cyan-500 transition text-white rounded-lg"
           id="todoInputSubmit">Add</button>
       </div>
     </main>
   </div>
   <p class="text-sm text-gray-700 text-right m-2">By: Redicholas</p>
-  <button id="clearAll" class="absolute top-2 left-2">Clear</button>
+  <button id="clearAll" class="absolute bottom-2 left-2 text-gray-700 hover:text-gray-500">Clear</button>
   <script type="module" src="/src/main.ts"></script>
 </body>
 
