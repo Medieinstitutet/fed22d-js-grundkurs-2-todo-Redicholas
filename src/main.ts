@@ -135,7 +135,7 @@ function showTodos(): void {
               class="w-full ml-2 text-sm bg-inherit border-none outline-none ${completed}">
             </input>
             <p title="Days to deadline: ${diffDays}" 
-              class="mr-2 flex flex-col justify-center text-xs px-1 ${deadlineWarner}" 
+              class="mr-2 flex flex-col justify-center text-xs px-1 w-fit ${deadlineWarner}" 
               id="deadlineText-${item.index}">${item.deadline}
             </p>
             <button class="editBtn" id="editTodo-${item.index}" title="Edit">
@@ -162,10 +162,9 @@ function showTodos(): void {
   gsap.from('.list-items', { y: 300, duration: 0.2, stagger: 0.08 });
 }
 
-// FIXME: Kan inte dölja landing page när user redan finns i localstorage
 function getName(): void {
   if (user !== '' && user != null) {
-    gsap.to(landingPage, { opacity: 0, duration: 1, onComplete: hideLandingPage });
+    gsap.to(landingPage, { opacity: 0, duration: 0.7, onComplete: hideLandingPage });
   }
   nameInput.value = localStorage.getItem('Name') as string;
   nameInput.focus();
@@ -244,7 +243,6 @@ function deleteTodo(event: MouseEvent) {
   showTodos();
 }
 
-// FIXME: Keyboard event edit
 function editTodo(event: MouseEvent): void {
   const target = event.target as HTMLInputElement;
   const targetParent = target.parentElement as HTMLInputElement;
@@ -410,7 +408,7 @@ nameInput?.addEventListener('keyup', (event) => {
   }
 });
 
-// Clear all todos, delete before publish.
+// Clear all todos
 document.querySelector('#clearAll')?.addEventListener('click', () => {
   localStorage.clear();
   todoArray = [];
@@ -428,7 +426,6 @@ todoUl?.addEventListener('change', (event: Event) => {
 todoListContainer?.addEventListener('click', (event: MouseEvent | Event) => {
   const mouseEvent = event as MouseEvent;
   const target = mouseEvent.target as HTMLElement;
-  // FIXME: keyboard event for edit
   if (target != null && target.matches('.deleteBtn')) {
     deleteTodo(mouseEvent);
   } else if (target != null && target.matches('.editBtn')) {
