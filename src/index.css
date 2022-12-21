@@ -23,8 +23,24 @@
 .landing-page,
 body {
   background-image: url('/poly-grid.svg');
-  background-repeat: no-repeat;
   background-size: cover;
+}
+
+.landing-page {
+  @apply absolute w-screen h-screen flex flex-col justify-center 
+  items-center z-30 text-cyan-400;
+}
+
+.name-input {
+  @apply rounded-sm shadow-md p-1 w-36 hover:bg-zinc-500
+  bg-zinc-700 text-cyan-400 shadow-black 
+  border-none outline-none text-center;
+}
+
+.name-input-btn {
+  @apply mt-4 py-2 px-12 rounded-md shadow-md
+  bg-zinc-700 text-cyan-400 shadow-black
+  hover:bg-zinc-500;
 }
 
 button.tab {
@@ -37,4 +53,22 @@ button.tab {
 span.counter {
   @apply bg-cyan-300 inline-block w-6
   rounded-full text-center text-gray-900 z-20 relative bottom-3;
+}
+
+div.todo-container {
+  @apply h-96 p-6 z-10 relative overflow-scroll sm:w-3/4 mx-auto
+  bg-gradient-to-b from-cyan-900 to-cyan-700 shadow-md 
+  shadow-gray-900 rounded-lg;
+}
+
+.todo-input-container {
+  @apply flex justify-center sm:w-3/4 mx-auto mt-2
+  bg-cyan-700 p-2 relative z-10
+  shadow-lg shadow-gray-900 rounded-lg;
+}
+
+.todo-input {
+  @apply mr-2 px-2 w-full rounded-lg 
+  bg-zinc-700 hover:bg-zinc-600 transition text-slate-300
+  border-none outline-none;
 }
