@@ -7,11 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:title" content="Doer | Get it Done">
   <meta property="og:description" content="A simple todo app">
-  <meta property="og:image" href="/public/screenshot.png">
+  <meta property="og:image" content="/public/screenshot.png">
   <meta property="og:url" content="https://medieinstitutet.github.io/fed22d-js-grundkurs-2-todo-Redicholas/">
   <meta property="og:type" content="website">
   <meta name="description" content="A simple todo app made for a school project">
-  <meta name="keywords" content="HTML, CSS, JavaScript, Todo, Medieinstitutet, Front End Developer">
+  <meta name="keywords"
+    content="HTML, CSS, JavaScript, Typescript, Tailwind, Todo, Medieinstitutet, Front End Developer">
   <meta name="author" content="Nicholas Peters">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
@@ -31,13 +32,15 @@
     bg-gradient-to-b z-30
   from-zinc-900 to-stone-800 text-cyan-400" id="landingPage">
     <h1 class="text-5xl text-center mb-20 font-josefin">Welcome to<br>Doer</h1>
-    <h2>Enter Your Name:</h2>
-    <input class="
+    <label class="flex flex-col text-center">
+      Enter Your Name:
+      <input name="Name Input" class="
       rounded-sm shadow-md p-1 w-36 hover:bg-zinc-500
-      bg-zinc-600 text-cyan-400 shadow-black border-none outline-none text-center" type="text" id="nameInput">
+      bg-zinc-700 text-cyan-400 shadow-black border-none outline-none text-center" type="text" id="nameInput">
+    </label>
     <button class="
       mt-4 py-2 px-12 rounded-md shadow-md
-      bg-zinc-600 text-cyan-400 shadow-black
+      bg-zinc-700 text-cyan-400 shadow-black
       hover:bg-zinc-500" id="nameSubmit">Ok</button>
   </div>
   <!-- Header -->
@@ -60,11 +63,11 @@
           <span id="generalAmount" class="mr-2 counter">
           </span>General</button>
         <!-- Personal tab -->
-        <button class="top-2 right-2 tab" id="personalButton">
+        <button class="tab top-2 right-2" id="personalButton">
           <span id="personalAmount" class="mr-2 counter">
           </span>Personal</button>
         <!-- Work tab -->
-        <button class="top-2 right-2 tab" id="workButton">
+        <button class="tab top-2 right-2" id="workButton">
           <span id="workAmount" class="counter mr-6 counter">
           </span>Work</button>
       </div>
@@ -90,10 +93,10 @@
       <!-- Add todo input container -->
       <div class="
         flex justify-center sm:w-3/4 mx-auto mt-2
-        bg-cyan-700 p-2
+        bg-cyan-700 p-2 relative z-10
         shadow-lg shadow-gray-900 rounded-lg">
         <!-- Todo input -->
-        <input class=" 
+        <input aria-label="Todo input" class=" 
           mr-2 px-2 w-full rounded-lg 
           bg-zinc-700 hover:bg-zinc-600 transition text-slate-300
           border-none outline-none" type="text" id="todoInput">
@@ -111,11 +114,11 @@
     </main>
   </div>
   <button id="clearAll" class="absolute top-2 left-2 text-sm text-gray-700">Clear All</button>
-  <footer class="text-gray-700 hover:text-gray-500 flex m-2 relative -z-10">
-    <a href="https://www.linkedin.com/in/nicholas-peters-1b0b42176"><img src="/public/linkedin.svg" alt="LinkedIn logo"
+  <footer class="text-gray-700 hover:text-gray-500 flex m-2 relative">
+    <a href="https://www.linkedin.com/in/nicholas-peters-1b0b42176"><img src="/linkedin.svg" alt="LinkedIn logo"
         class="mx-2 text-gray-700" height="30" width="30"></a>
-    <a href="https://github.com/Redicholas"><img src="/public/square-github.svg" alt="gitHub logo"
-        class="mx-2 text-gray-700" height="30" width="30"></a>
+    <a href="https://github.com/Redicholas"><img src="/square-github.svg" alt="gitHub logo" class="mx-2 text-gray-700"
+        height="30" width="30"></a>
     <p class="text-sm text-gray-700 absolute bottom-2 right-2">By: Redicholas</p>
   </footer>
   <script type="module" src="/src/main.ts"></script>

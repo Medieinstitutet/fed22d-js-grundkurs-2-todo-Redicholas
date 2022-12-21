@@ -22,7 +22,7 @@
 
 .landing-page,
 body {
-  background-image: url('/public/poly-grid.svg');
+  background-image: url('/poly-grid.svg');
   background-repeat: no-repeat;
   background-size: cover;
 }
