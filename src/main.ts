@@ -107,7 +107,7 @@ function showTodos(): void {
       break;
   }
   if (todoArray.length === 0) {
-    todoListHtml = '<p class="text-center mt-8">Dont you have anything to do?! <br> Add something!</p>';
+    todoListHtml = '<li><p class="text-center mt-8">Dont you have anything to do?! <br> Add something!</p></li>';
   } else {
     todoArray.forEach((item) => {
       // eslint-disable-next-line no-param-reassign
