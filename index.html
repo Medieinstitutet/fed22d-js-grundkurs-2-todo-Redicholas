@@ -22,34 +22,23 @@
     rel="stylesheet">
   <title>Doer | Get it Done</title>
   <script type="module" crossorigin src="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.1f812e30.js"></script>
-  <link rel="stylesheet" href="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.6e1dff0e.css">
+  <link rel="stylesheet" href="/fed22d-js-grundkurs-2-todo-Redicholas/assets/index.1dc1b523.css">
 </head>
 
-<body class="
-  m-auto max-h-screen flex flex-col font-rubik 
-  text-zinc-200">
+<body class="m-auto max-h-screen flex flex-col font-rubik text-zinc-200">
   <!-- Landing page -->
-  <div class="
-    landing-page absolute w-screen h-screen flex flex-col justify-center items-center
-    bg-gradient-to-b z-30
-  from-zinc-900 to-stone-800 text-cyan-400" id="landingPage">
+  <div class="landing-page" id="landingPage">
     <h1 class="text-5xl text-center mb-20 font-josefin">Welcome to<br>Doer</h1>
     <label class="flex flex-col text-center">
       Enter Your Name:
-      <input name="Name Input" class="
-      rounded-sm shadow-md p-1 w-36 hover:bg-zinc-500
-      bg-zinc-700 text-cyan-400 shadow-black border-none outline-none text-center" type="text" id="nameInput">
+      <input name="Name Input" class="name-input" type="text" id="nameInput">
     </label>
-    <button class="
-      mt-4 py-2 px-12 rounded-md shadow-md
-      bg-zinc-700 text-cyan-400 shadow-black
-      hover:bg-zinc-500" id="nameSubmit">Ok</button>
+    <button class="name-input-btn" id="nameSubmit">Ok</button>
   </div>
   <!-- Header -->
   <div class="wrapper h-screen flex justify-center flex-col mx-4 lg:m-auto lg:w-2/3">
     <header>
-      <h1 class="
-        text-5xl sm:text-8xl text-center font-josefin 
+      <h1 class="text-5xl sm:text-8xl text-center font-josefin 
         font-thin text-cyan-400">
         Doer</h1>
       <!-- Header welcome text -->
@@ -70,14 +59,11 @@
           </span>Personal</button>
         <!-- Work tab -->
         <button class="tab top-2 right-2" id="workButton">
-          <span id="workAmount" class="counter mr-6 counter">
+          <span id="workAmount" class="mr-6 counter">
           </span>Work</button>
       </div>
       <!-- Todo container -->
-      <div class="
-        h-96 p-6 z-10 relative overflow-scroll sm:w-3/4 mx-auto
-        bg-gradient-to-b from-cyan-900 to-cyan-700 shadow-md 
-        shadow-gray-900 rounded-lg" id="todoListContainer">
+      <div class="todo-container" id="todoListContainer">
         <!-- Sort selector -->
         <div class="flex justify-between pr-14 mb-4">
           <select name="sort" id="sortSelector" class="p-2 text-sm bg-cyan-800 rounded-lg">
@@ -93,15 +79,10 @@
         </ul>
       </div>
       <!-- Add todo input container -->
-      <div class="
-        flex justify-center sm:w-3/4 mx-auto mt-2
-        bg-cyan-700 p-2 relative z-10
-        shadow-lg shadow-gray-900 rounded-lg">
+      <div class="todo-input-container">
         <!-- Todo input -->
-        <input aria-label="Todo input" class=" 
-          mr-2 px-2 w-full rounded-lg 
-          bg-zinc-700 hover:bg-zinc-600 transition text-slate-300
-          border-none outline-none" type="text" id="todoInput">
+        <input aria-label="Todo input" class="todo-input" type="text" id="todoInput">
+        <!-- Deadline input -->
         <label class="flex">
           <span class="material-symbols-outlined flex flex-col justify-center mr-1 cursor-pointer" title="Deadline">
             calendar_month
@@ -127,10 +108,3 @@
 </body>
 
 </html>
-
-
-<!-- TODO
-    - Validera HTML (kopiera den renderade HTML-koden): https://validator.w3.org/#validate_by_input
-    - Kontrollera tillgänglighet: https://www.a11yproject.com/checklist/ & Chrome Lighthouse/Firefox Accessibility Tools
-    - Validera genererade CSS: https://jigsaw.w3.org/css-validator/#validate_by_input
-    -->
