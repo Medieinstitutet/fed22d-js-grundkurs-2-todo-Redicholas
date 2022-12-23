@@ -183,7 +183,7 @@ function lookForName(): void {
   }
 }
 
-function getTime() {
+function getTime(): string {
   const time = new Date();
   const date: Date = time.getDate() as unknown as Date;
   const month: Date = time.getMonth() + 1 as unknown as Date;

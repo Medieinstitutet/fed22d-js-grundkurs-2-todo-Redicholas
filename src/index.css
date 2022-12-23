@@ -43,19 +43,19 @@ body {
   hover:bg-zinc-500;
 }
 
-button.tab {
+.tab {
   @apply flex justify-center
   mx-px py-1 pb-2 w-28 rounded-t-lg relative z-0 
   transition-all
   bg-cyan-900 hover:bg-cyan-300 hover:text-gray-900;
 }
 
-span.counter {
+.counter {
   @apply bg-cyan-300 inline-block w-6
   rounded-full text-center text-gray-900 z-20 relative bottom-3;
 }
 
-div.todo-container {
+.todo-container {
   @apply h-96 p-6 z-10 relative overflow-scroll sm:w-3/4 mx-auto
   bg-gradient-to-b from-cyan-900 to-cyan-700 shadow-md 
   shadow-gray-900 rounded-lg;
